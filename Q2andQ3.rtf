@@ -1,0 +1,21 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2638
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww29200\viewh16120\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 2) \
+	Entities involved: Pet (Super), Cat and Dog\
+	contstraint: OPTIONAL ,OR\
+3)\
+	Owner (\ul id,\ulnone  firstName, lastName, address)\
+\
+	Pet (\ul id\ulnone , \ul name\ulnone , age, description)  // Pet(id) is foreign key to Owner(id)\
+\
+	PetStay (\ul name\ulnone , \ul roomNumber\ulnone , \ul buildingId\ulnone , \ul startDate\ulnone , endDate, cost) // PetStay(name) is foreign key to Pet(name),  PetStay(roomNumber) is foreign key to Room(roomNumber) and PetStay(buildingId) is foreign key to Building(buildingId)\
+\
+	Room (\ul buildingId\ulnone , \ul roomNumber\ulnone , roomSize) //  Room(buildingId) is foreign key to Building(buildingId)\
+\
+	Building (\ul buildingId\ulnone , buildingName, yearBuilt)\
+}
