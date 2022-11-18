@@ -1,17 +1,17 @@
-CREATE DATABASE orders;
+--CREATE DATABASE orders;
 
 USE orders;
--- DROP TABLE review;
--- DROP TABLE shipment;
--- DROP TABLE productinventory;
--- DROP TABLE warehouse;
--- DROP TABLE orderproduct;
--- DROP TABLE incart;
--- DROP TABLE product;
--- DROP TABLE category;
--- DROP TABLE ordersummary;
--- DROP TABLE paymentmethod;
--- DROP TABLE customer;
+DROP TABLE review;
+DROP TABLE shipment;
+DROP TABLE productinventory;
+DROP TABLE warehouse;
+DROP TABLE orderproduct;
+DROP TABLE incart;
+DROP TABLE product;
+DROP TABLE category;
+DROP TABLE ordersummary;
+DROP TABLE paymentmethod;
+DROP TABLE customer;
 
 
 CREATE TABLE customer (
@@ -180,16 +180,16 @@ INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Loui
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Laughing Lumberjack Lager',1,'24 - 12 oz bottles',14.00);
 
 INSERT INTO warehouse(warehouseName) VALUES ('Main warehouse');
-INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (1, 1, 5, 18);
-INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (2, 1, 10, 19);
-INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (3, 1, 3, 10);
-INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (4, 1, 2, 22);
-INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (5, 1, 6, 21.35);
-INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (6, 1, 3, 25);
-INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (7, 1, 1, 30);
-INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (8, 1, 0, 40);
-INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (9, 1, 2, 97);
-INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (10, 1, 3, 31);
+INSERT INTO productinventory(productId, warehouseId, quantity, price) VALUES (1, 1, 5, 18);
+INSERT INTO productinventory(productId, warehouseId, quantity, price) VALUES (2, 1, 10, 19);
+INSERT INTO productinventory(productId, warehouseId, quantity, price) VALUES (3, 1, 3, 10);
+INSERT INTO productinventory(productId, warehouseId, quantity, price) VALUES (4, 1, 2, 22);
+INSERT INTO productinventory(productId, warehouseId, quantity, price) VALUES (5, 1, 6, 21.35);
+INSERT INTO productinventory(productId, warehouseId, quantity, price) VALUES (6, 1, 3, 25);
+INSERT INTO productinventory(productId, warehouseId, quantity, price) VALUES (7, 1, 1, 30);
+INSERT INTO productinventory(productId, warehouseId, quantity, price) VALUES (8, 1, 0, 40);
+INSERT INTO productinventory(productId, warehouseId, quantity, price) VALUES (9, 1, 2, 97);
+INSERT INTO productinventory(productId, warehouseId, quantity, price) VALUES (10, 1, 3, 31);
 
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Arnold', 'Anderson', 'a.anderson@gmail.com', '204-111-2222', '103 AnyWhere Street', 'Winnipeg', 'MB', 'R3X 45T', 'Canada', 'arnold' , 'test');
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Bobby', 'Brown', 'bobby.brown@hotmail.ca', '572-342-8911', '222 Bush Avenue', 'Boston', 'MA', '22222', 'United States', 'bobby' , 'bobby');
