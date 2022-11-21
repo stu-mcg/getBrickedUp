@@ -63,31 +63,30 @@ router.get('/', function(req, res, next) {
                 .input('productAmount', product.quantity)
                 .input('productPrice', product.price)
                 .query(insertProd)
-
-                //update total price
-                let updatePrice = "UPDATE ordersummary SET totalAmount = (SELECT SUM(price * quantity) as total FROM orderproduct WHERE orderId = @orderId GROUP BY orderId)"
-                await pool.request().input('orderId', orderId).query(updatePrice)
-                
-                //print order summary
-                res.write("<h2>Order Summary</h2>")
-                getOrderSum = "SELECT orderDate, O.customerId, firstName, lastName, totalAmount FROM ordersummary AS O, customer AS C WHERE O.customerId = C.customerId AND orderId = @orderId";
-                let orderHeader = await (await pool.request().input('orderId', orderId).query(getOrderSum)).recordset[0];
-                res.write("<table border = \"1\"><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
-                res.write(`<tr><td>${orderId}</td><td>${new Date(orderHeader.orderDate).toLocaleString('en-US', {hour12: false})}</td><td>${orderHeader.customerId}</td><td>${orderHeader.firstName} ${orderHeader.lastName}</td><td>$${orderHeader.totalAmount.toFixed(2)}</td></tr>`)
-                res.write("<tr><td colspan = \"50\"><table border = \"1\" align=\"right\"><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>")
-                getOrderProd = `SELECT productId, quantity, price FROM orderproduct WHERE orderId = @orderId`;
-                let orderProducts = await pool.request().input('orderId', orderId).query(getOrderProd);
-                for(let j = 0; j < orderProducts.recordset.length; j++){
-                    let orderProduct = orderProducts.recordset[j];
-                    res.write(`<tr><td>${orderProduct.productId}</td><td>${orderProduct.quantity}</td><td>$${orderProduct.price.toFixed(2)}</td></tr>`)
-                }
-                res.write("</table></td></tr></table><br>");
-                res.write("<a href='/'>return to home</a>")
-
-                //reset cart
-                req.session.productList = [];
-                res.end()
             }
+            //update total price
+            let updatePrice = "UPDATE ordersummary SET totalAmount = (SELECT SUM(price * quantity) as total FROM orderproduct WHERE orderId = @orderId GROUP BY orderId)"
+            await pool.request().input('orderId', orderId).query(updatePrice)
+            
+            //print order summary
+            res.write("<h2>Order Summary</h2>")
+            getOrderSum = "SELECT orderDate, O.customerId, firstName, lastName, totalAmount FROM ordersummary AS O, customer AS C WHERE O.customerId = C.customerId AND orderId = @orderId";
+            let orderHeader = await (await pool.request().input('orderId', orderId).query(getOrderSum)).recordset[0];
+            res.write("<table border = \"1\"><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
+            res.write(`<tr><td>${orderId}</td><td>${new Date(orderHeader.orderDate).toLocaleString('en-US', {hour12: false})}</td><td>${orderHeader.customerId}</td><td>${orderHeader.firstName} ${orderHeader.lastName}</td><td>$${orderHeader.totalAmount.toFixed(2)}</td></tr>`)
+            res.write("<tr><td colspan = \"50\"><table border = \"1\" align=\"right\"><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>")
+            getOrderProd = `SELECT productId, quantity, price FROM orderproduct WHERE orderId = @orderId`;
+            let orderProducts = await pool.request().input('orderId', orderId).query(getOrderProd);
+            for(let j = 0; j < orderProducts.recordset.length; j++){
+                let orderProduct = orderProducts.recordset[j];
+                res.write(`<tr><td>${orderProduct.productId}</td><td>${orderProduct.quantity}</td><td>$${orderProduct.price.toFixed(2)}</td></tr>`)
+            }
+            res.write("</table></td></tr></table><br>");
+            res.write("<a href='/'>return to home</a>")
+
+            //reset cart
+            req.session.productList = [];
+            res.end()
 
         } catch(err) {
             console.dir(err);
