@@ -11,9 +11,12 @@ router.get('/', function(req, res, next) {
 
     let productList = false;
     if (req.session.productList && req.session.productList.length > 0) {
-        productList = req.session.productList;
+        productList = req.session.productList.filter(function (e) {
+            return e != null;
+        });;
     }
-    if(!productList){
+    
+    if(!productList || productList.length == 0){
         res.write("<h2>There is nothing in the cart, <a href = 'listprod'>return to the shopping page</a></h2>")
         res.end()
     }else{
@@ -67,7 +70,7 @@ router.get('/', function(req, res, next) {
                         res.write("<a href='/'>return to home</a>")
 
                         //reset cart
-                        req.session.productList
+                        req.session.productList = [];
                         res.end()
                     }
                 }

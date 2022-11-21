@@ -17,6 +17,7 @@ router.get('/', function(req, res, next) {
     let id = false;
     let name = false;
     let price = false;
+    let amount = 1;
     if (req.query.id && req.query.name && req.query.price) {
         id = req.query.id;
         name = req.query.name;
@@ -24,17 +25,26 @@ router.get('/', function(req, res, next) {
     } else {
         res.redirect("/listprod");
     }
+    if(req.query.amount){
+        console.dir(req.query.amount)
+        amount = Number(req.query.amount)
+        console.dir(amount)
+    }
 
     // Update quantity if add same item to order again
     if (productList[id]){
-        productList[id].quantity = productList[id].quantity + 1;
+        productList[id].quantity = productList[id].quantity + amount;
     } else {
         productList[id] = {
             "id": id,
             "name": name,
             "price": price,
-            "quantity": 1
+            "quantity": amount
         };
+    }
+
+    if(productList[id].quantity < 1){
+        productList.splice(id, 1)
     }
 
     req.session.productList = productList;

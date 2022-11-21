@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
         productList = req.session.productList;
         res.write("<h1>Your Shopping Cart</h1>");
         res.write("<table><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th>");
-        res.write("<th>Price</th><th>Subtotal</th></tr>");
+        res.write("<th>Price</th><th>Subtotal</th><th></th></tr>");
 
         let total = 0;
         for (let i = 0; i < productList.length; i++) {
@@ -21,10 +21,11 @@ router.get('/', function(req, res, next) {
             res.write("<tr><td>" + product.id + "</td>");
             res.write("<td>" + product.name + "</td>");
 
-            res.write("<td align=\"center\">" + product.quantity + "</td>");
+            res.write(`<td align=\"center\"><a href="addcart?id=${product.id}&name=${product.name.replace(/ /g, '%20')}&price=${product.price}&amount=-1" style="text-decoration: none">-</a>${product.quantity}<a href="addcart?id=${product.id}&name=${product.name.replace(/ /g, '%20')}&price=${product.price}&amount=1" style="text-decoration: none">+</a></td>`);
 
             res.write("<td align=\"right\">$" + Number(product.price).toFixed(2) + "</td>");
-            res.write("<td align=\"right\">$" + (Number(product.quantity.toFixed(2)) * Number(product.price)).toFixed(2) + "</td></tr>");
+            res.write("<td align=\"right\">$" + (Number(product.quantity).toFixed(2) * Number(product.price)).toFixed(2) + "</td>");
+            res.write(`<td><a href="addcart?id=${product.id}&name=${product.name.replace(/ /g, '%20')}&price=${product.price}&amount=${Number(-product.quantity)}" style="text-decoration: none">remove all</a></td>`)
             res.write("</tr>");
             total = total + product.quantity * product.price;
         }
