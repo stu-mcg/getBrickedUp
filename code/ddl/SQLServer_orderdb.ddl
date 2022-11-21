@@ -1,9 +1,3 @@
-DROP DATABASE orders
-
-CREATE DATABASE orders;
-
-USE orders;
-
 CREATE TABLE customer (
     customerId          INT IDENTITY,
     firstName           VARCHAR(40),
