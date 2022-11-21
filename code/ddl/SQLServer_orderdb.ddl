@@ -1,3 +1,5 @@
+DROP DATABASE orders
+
 CREATE DATABASE orders;
 
 USE orders;
