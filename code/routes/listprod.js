@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
 
     // Get the product name to search for
     let name = req.query.productName;
+    if(name == undefined) name = "";
     
     /** $name now contains the search string the user entered
      Use it to build a query and print out the results. **/
@@ -27,7 +28,27 @@ router.get('/', function(req, res, next) {
         num = num.toFixed(2);
     **/
 
-    res.end();
+        (async function() {
+            try {
+                res.write("<h1>Search for the products you want to buy:</h1>")
+                res.write("Search bar goes here")
+                res.write("<table><tr><th></th><th>Product Name</th><th>Price</th></tr>")
+                let pool = await sql.connect(dbConfig);
+                let q = `SELECT productId, productName, productPrice FROM product WHERE productName LIKE \'%${name}%\' ORDER BY productName ASC`;
+                console.log(name)
+                let products = await pool.request().query(q);
+                for (let i = 0; i < products.recordset.length; i++) {
+                    let product = products.recordset[i];
+                    res.write(`<tr><td><a href = addcart?id=${product.productId}&name=${product.productName}&price=${product.productPrice}>add to cart</a></td><td>${product.productName}</td><td>${product.productPrice.toFixed(2)}</td></tr>`)
+                }
+                res.write("</table>");
+                res.end();
+            } catch(err) {
+                console.dir(err);
+                res.write("this error" + JSON.stringify(err));
+                res.end();
+            }
+        })();
 });
 
 module.exports = router;
