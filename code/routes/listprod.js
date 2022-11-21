@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
         (async function() {
             try {
                 res.write("<h1>Search for the products you want to buy:</h1>")
-                res.write("Search bar goes here")
+                res.write("<form method=\"get\" action=\"listprod\"><input type=\"text\" name=\"productName\" size=\"50\"><input type=\"submit\" value=\"Submit\"><input type=\"reset\" value=\"Reset\">(Leave blank for all products)</form>");
                 res.write("<table><tr><th></th><th>Product Name</th><th>Price</th></tr>")
                 let pool = await sql.connect(dbConfig);
                 let q = `SELECT productId, productName, productPrice FROM product WHERE productName LIKE \'%${name}%\' ORDER BY productName ASC`;
