@@ -39,7 +39,7 @@ router.get('/', function(req, res, next) {
                 let products = await pool.request().query(q);
                 for (let i = 0; i < products.recordset.length; i++) {
                     let product = products.recordset[i];
-                    res.write(`<tr><td><a href = addcart?id=${product.productId}&name=${product.productName}&price=${product.productPrice}>add to cart</a></td><td>${product.productName}</td><td>${product.productPrice.toFixed(2)}</td></tr>`)
+                    res.write(`<tr><td><a href = addcart?id=${product.productId}&name=${product.productName.replace(/ /g, '%20')}&price=${product.productPrice}>add to cart</a></td><td>${product.productName}</td><td>${product.productPrice.toFixed(2)}</td></tr>`)
                 }
                 res.write("</table>");
                 res.end();
