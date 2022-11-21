@@ -59,7 +59,7 @@ const handlebars = require('express-handlebars');
 app.set('view engine', 'handlebars');
 
 app.engine('handlebars', handlebars({
-  layoutsDir: '${__dirname}/views/layouts'
+  layoutsDir: 'views/layouts'
 }));
 // Rendering the main page
 app.get('/', function (req, res) {
