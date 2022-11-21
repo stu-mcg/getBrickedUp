@@ -27,8 +27,8 @@ router.get('/', function(req, res, next) {
                 let orderHeader = orderHeaders.recordset[i];
                 res.write(`<tr><td>${orderHeader.orderId}</td><td>${new Date(orderHeader.orderDate).toLocaleString('en-US', {hour12: false})}</td><td>${orderHeader.customerId}</td><td>${orderHeader.firstName} ${orderHeader.lastName}</td><td>$${orderHeader.totalAmount.toFixed(2)}</td></tr>`)
                 res.write("<tr><td colspan = \"50\"><table border = \"1\" align=\"right\"><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>")
-                let q = `SELECT productId, quantity, price FROM orderproduct WHERE orderId = ${orderHeader.orderId}`;
-                let orderProducts = await pool.request().query(q);
+                let q = `SELECT productId, quantity, price FROM orderproduct WHERE orderId = @orderId`;
+                let orderProducts = await pool.request().input('orderId', orderHeader.orderId).query(q);
                 for(let j = 0; j < orderProducts.recordset.length; j++){
                     let orderProduct = orderProducts.recordset[j];
                     res.write(`<tr><td>${orderProduct.productId}</td><td>${orderProduct.quantity}</td><td>$${orderProduct.price.toFixed(2)}</td></tr>`)
