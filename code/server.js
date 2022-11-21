@@ -52,12 +52,18 @@ app.use('/addcart', addCart);
 app.use('/showcart', showCart);
 app.use('/checkout', checkout);
 app.use('/order', order);
+app.use(express.static('public'));
 
+const handlebars = require('express-handlebars');
+
+app.set('view engine', 'handlebars');
+
+app.engine('handlebars', handlebars({
+  layoutsDir: '${__dirname}/views/layouts'
+}));
 // Rendering the main page
 app.get('/', function (req, res) {
-  res.render('index', {
-    title: "Get Bricked Up Main Page"
-  });
+  res.render('index', {layout: 'main'});
 })
 
 // Starting our Express app

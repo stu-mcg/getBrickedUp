@@ -1,4 +1,4 @@
-DROP DATABASE orders
+--DROP DATABASE orders
 
 CREATE DATABASE orders;
 
