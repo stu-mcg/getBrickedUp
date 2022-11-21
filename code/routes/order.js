@@ -15,6 +15,7 @@ router.get('/', function(req, res, next) {
     }
     if(!productList){
         res.write("<h2>There is nothing in the cart, <a href = 'listprod'>return to the shopping page</a></h2>")
+        res.end()
     }else{
         (async function() {
             try {
