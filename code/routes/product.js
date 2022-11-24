@@ -8,7 +8,21 @@ router.get('/', function(req, res, next) {
         try {
             let pool = await sql.connect(dbConfig);
 
-	// Get product name to search for
+            productId = req.query.id
+            let getProductInfo = "SELECT productId, productName, productPrice, productImageURL, productImage, productDesc FROM product WHERE productId = @productId"
+            let info = await (await pool.request().input("productId", productId).query(getProductInfo)).recordset[0]
+            res.write(`ID: ${info.productId}<br>`)
+            res.write(`Name: ${info.productName}<br>`)
+            res.write(`Price: $${info.productPrice.toFixed(2)}<br>`)
+            if(info.productImageURL != null){
+                res.write(`ImageURL: <img src = "${info.productImageURL}"><br>`)
+            }
+            if(info.productImage != null){
+                res.write(`Image: <img src = "displayImage?id=${info.productId}"><br>`)
+            }
+            res.write(`Desc: ${info.productDesc}<br>`)
+            res.write(`<a href = addcart?id=${info.productId}&name=${info.productName.replace(/ /g, '%20')}&price=${info.productPrice}>Add to Cart</a><br>`)
+            res.write(`<a href = "listProd">Continue Shopping</a>`)
 	// TODO: Retrieve and display info for the product
 
 	// TODO: If there is a productImageURL, display using IMG tag
