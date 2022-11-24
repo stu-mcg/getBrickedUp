@@ -37,7 +37,7 @@ router.get('/', function(req, res, next) {
                 res.write("<table style= \"background-color: #f5f5dc\" border = \"1\"><tr><th>Add to Cart</th><th>Product Name</th><th>Categories</th><th>Price</th></tr>")
                 let pool = await sql.connect(dbConfig);
                 let q = `SELECT productId, productName, categoryName, productPrice FROM product JOIN category ON product.categoryId=category.categoryId WHERE productName LIKE @name AND categoryName = @categoryName ORDER BY productName ASC`;
-                if(categoryName == 'All'){
+                if(categoryName == 'All' || categoryName == null){
                     q = `SELECT productId, productName, categoryName, productPrice FROM product JOIN category ON product.categoryId=category.categoryId WHERE productName LIKE @name ORDER BY productName ASC`;
                 }
                 let products = await pool.request().input('name', '%' + name + '%').input('categoryName', categoryName).query(q);
