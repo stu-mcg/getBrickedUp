@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 
 	
 	// TODO: Include files auth.jsp and jdbc.jsp
-	
+	auth.checkAuthentication(req, res)
 	
 	
     res.setHeader('Content-Type', 'text/html');
@@ -26,6 +26,7 @@ router.get('/', function(req, res, next) {
                 let sale = sales.recordset[i];
                 res.write(`<tr><td style=\"text-align: center\"> ${sale.yr+"-"+sale.m+"-"+sale.d}</td><td> ${sale.total}</td></tr>`);
             }
+            res.end()
         } catch(err) {
             console.dir(err);
             res.write(err + "");

@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
     
     res.write("<h1>Customer Profile</h1>");
+    res.end()
     // TODO: Print Customer information
 
     (async function() {
