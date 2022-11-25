@@ -6,7 +6,8 @@ const auth = require('../auth');
 router.get('/', function(req, res, next) {
 
     res.setHeader('Content-Type', 'text/html');
-
+    
+    res.write("<h1>Customer Profile</h1>");
     // TODO: Print Customer information
 
     (async function() {

@@ -6,6 +6,7 @@ const auth = {
     
         if (req.session.authenticatedUser) {
             authenticated = true;
+            
         }
     
         if (!authenticated) {

@@ -29,8 +29,11 @@ async function validateLogin(req) {
 
 	// TODO: Check if userId and password match some customer account. 
 	// If so, set authenticatedUser to be the username.
-
-           return false;
+            let info ="SELECT userid, password FROM customer WHERE userid = @username AND password =@password";
+            let login = await pool.request().input('username', username).input('password', password).query(info);
+            
+            authenticatedUser = true;
+            
         } catch(err) {
             console.dir(err);
             return false;
