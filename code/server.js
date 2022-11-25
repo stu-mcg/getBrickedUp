@@ -51,14 +51,17 @@ app.use(session({
     maxAge: 60000,
   }
 }))
-
+//
 // Setting up the rendering engine
-app.engine('handlebars', exphbs());
+app.engine('handlebars', exphbs({
+  layoutsDir: `${__dirname}/views/layouts`
+}));
 app.set('view engine', 'handlebars');
 
 // Setting up where static assets should
 // be served from.
 app.use(express.static('public'));
+
 
 // Setting up Express.js routes.
 // These present a "route" on the URL of the site.
