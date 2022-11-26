@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
             productName = () => info.productName; 
             productId = () => info.productId;
             productPrice = () => info.productPrice;
-            //productImageURL = () => info.productImageURL;
             productDesc = () => info.productDesc;
 
            if(info.productImageURL != null && info.productImage != null){
