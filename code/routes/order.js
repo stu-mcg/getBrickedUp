@@ -65,7 +65,7 @@ router.get('/', function(req, res, next) {
                 .query(insertProd)
             }
             //update total price
-            let updatePrice = "UPDATE ordersummary SET totalAmount = (SELECT SUM(price * quantity) as total FROM orderproduct WHERE orderId = @orderId GROUP BY orderId)"
+            let updatePrice = "UPDATE ordersummary SET totalAmount = (SELECT SUM(price * quantity) as total FROM orderproduct WHERE orderId = @orderId GROUP BY orderId) WHERE orderId = @orderId"
             await pool.request().input('orderId', orderId).query(updatePrice)
             
             //print order summary

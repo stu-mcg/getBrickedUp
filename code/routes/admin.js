@@ -20,11 +20,11 @@ router.get('/', function(req, res, next) {
             
             res.write("<h1>Administrator Sales Report by Day</h1>");
             res.write("<table border=\"1\"><tr><th>Order Date</th><th>Total Order Amount</th></tr>");
-            let q = "SELECT YEAR(orderDate) as yr, MONTH(orderDate) as m, DAY(orderDate) as d, SUM(totalAmount) AS total FROM ordersummary GROUP BY YEAR(orderDate), MONTH(orderDate), DAY(orderDate)";
-            let sales = await pool.request().query(q);
-            for(let i=0; i<sales.recordset.length; i++){
-                let sale = sales.recordset[i];
-                res.write(`<tr><td style=\"text-align: center\"> ${sale.yr+"-"+sale.m+"-"+sale.d}</td><td> ${sale.total}</td></tr>`);
+            let q = "SELECT orderDate, SUM(totalAmount) AS total FROM ordersummary GROUP BY orderDate";
+            let dates = await pool.request().query(q);
+            for(let i=0; i<dates.recordset.length; i++){
+                let date = dates.recordset[i];
+                res.write(`<tr><td style=\"text-align: center\"> ${new Date(date.orderDate).toLocaleString('en-US', {year: 'numeric', month: 'numeric', day: 'numeric'})}</td><td> $${date.total.toFixed(2)}</td></tr>`);
             }
             res.end()
         } catch(err) {
