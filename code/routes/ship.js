@@ -57,13 +57,16 @@ router.get('/', function(req, res, next) {
                     //remove from inv
                 }else{
                     transaction.rollback()
-                    res.write(`<h1>Shipment not done. Insufficient inventory for product id: ${pid}</h2>`)
+                    res.write(`<h1>Shipment not done. Insufficient inventory for product id: ${pid}</h1>`)
+                    res.write(`<a href='/'>home</a>`)
                     res.end()
                     return
                     
                 }
             }
             transaction.commit()
+            res.write(`<h1>Shipment successfully processed</h1>`)
+            res.write(`<a href='/'>home</a>`)
             res.end()
             
 
