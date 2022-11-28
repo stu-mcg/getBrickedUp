@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
         req.session.loginMessage = false;
     }
 
-    res.render('login', {
+    res.render('login', {layout: 'main',
         title: "Login Screen",
         loginMessage: loginMessage
     });

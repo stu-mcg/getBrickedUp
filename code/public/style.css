@@ -25,15 +25,7 @@
       a.button:hover {
         opacity: 0.8;
       }
-      input[type=text], input[type=password] {
-        text-align:center;
-        width: 500%;
-        padding: 16px 8px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
-      }
+   
       
       
     
