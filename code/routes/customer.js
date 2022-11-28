@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
         res.write(`<tr><td>Postal Code</td><td> ${info.recordset[0].postalCode}</td></tr>`);
         res.write(`<tr><td>Country</td><td> ${info.recordset[0].country}</td></tr>`);
         res.write(`<tr><td>User ID</td><td> ${info.recordset[0].userid}</td></tr>`);
-        res.write("</table>");
+        res.write("</table><a href='/'>home</a>");
         res.end();
 
         } catch(err) {

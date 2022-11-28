@@ -26,6 +26,7 @@ router.get('/', function(req, res, next) {
                 let sale = sales.recordset[i];
                 res.write(`<tr><td style=\"text-align: center\"> ${sale.yr+"-"+sale.m+"-"+sale.d}</td><td> $${sale.total.toFixed(2)}</td></tr>`);
             }
+            res.write(`</table><a href='/'>home</a>`)
             res.end()
         } catch(err) {
             console.dir(err);

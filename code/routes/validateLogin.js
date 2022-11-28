@@ -10,7 +10,9 @@ router.post('/', function(req, res) {
         let authenticatedUser = await validateLogin(req);
         req.session.authenticatedUser = authenticatedUser
         if (authenticatedUser) {
-            res.redirect("/");
+            let originalUrl = req.session.originalUrl
+            req.session.originalUrl = "/"
+            res.redirect(originalUrl);
         } else {
             req.session.loginMessage = "Incorrect login details";
             res.redirect("/login");
