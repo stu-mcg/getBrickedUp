@@ -24,8 +24,9 @@ router.get('/', function(req, res, next) {
             let sales = await pool.request().query(q);
             for(let i=0; i<sales.recordset.length; i++){
                 let sale = sales.recordset[i];
-                res.write(`<tr><td style=\"text-align: center\"> ${sale.yr+"-"+sale.m+"-"+sale.d}</td><td> ${sale.total}</td></tr>`);
+                res.write(`<tr><td style=\"text-align: center\"> ${sale.yr+"-"+sale.m+"-"+sale.d}</td><td> $${sale.total.toFixed(2)}</td></tr>`);
             }
+            res.write(`</table><a href='/'>home</a>`)
             res.end();
         } catch(err) {
             console.dir(err);
