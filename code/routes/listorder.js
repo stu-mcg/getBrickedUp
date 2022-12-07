@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
             let q = "SELECT orderId, orderDate, O.customerId, firstName, lastName, totalAmount FROM ordersummary AS O, customer AS C WHERE O.customerId = C.customerId";
             let orderHeaders = await pool.request().query(q);
             for (let i = 0; i < orderHeaders.recordset.length; i++) {
-                res.write("<table style= \"background-color: #f5f5dc\"border = \"1\"><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
+                res.write("<table style= \"background-color: #b0c4ed\"border = \"1\"><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
                 let orderHeader = orderHeaders.recordset[i];
                 res.write(`<tr><td>${orderHeader.orderId}</td><td>${new Date(orderHeader.orderDate).toLocaleString('en-US', {hour12: false})}</td><td>${orderHeader.customerId}</td><td>${orderHeader.firstName} ${orderHeader.lastName}</td><td>$${orderHeader.totalAmount.toFixed(2)}</td></tr>`)
                 res.write("<tr><td colspan = \"50\"><table border = \"1\" align=\"right\"><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>")

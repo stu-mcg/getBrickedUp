@@ -8,9 +8,13 @@ router.post('/', function(req, res) {
     // to the database in the validateLogin function.
     (async () => {
         let authenticatedUser = await validateLogin(req);
+        req.session.authenticatedUser = authenticatedUser
         if (authenticatedUser) {
-            res.redirect("/");
+            let originalUrl = req.session.originalUrl
+            req.session.originalUrl = "/"
+            res.redirect(originalUrl);
         } else {
+            req.session.loginMessage = "Incorrect login details";
             res.redirect("/login");
         }
      })();
@@ -29,14 +33,18 @@ async function validateLogin(req) {
 
 	// TODO: Check if userId and password match some customer account. 
 	// If so, set authenticatedUser to be the username.
-
-           return false;
+            let getPassword ="SELECT password FROM customer WHERE userid = @username";
+            let userPassword = await (await pool.request().input('username', username).query(getPassword)).recordset[0].password;
+            if(password != undefined && userPassword == password){
+                return username
+            }
+            return false;
+            
         } catch(err) {
             console.dir(err);
             return false;
         }
     })();
-
     return authenticatedUser;
 }
 
