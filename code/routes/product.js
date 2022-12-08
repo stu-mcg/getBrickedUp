@@ -30,8 +30,7 @@ router.get('/', function(req, res, next) {
                                 reviewDate: `${new Date(review.reviewDate).toDateString()}`
                             }         
             }
-        
-        
+            
            if(info.productImageURL != null ){
                 images = () => `<img src = ${info.productImageURL}>`
                return res.render('prod',{layout: 'main', 
