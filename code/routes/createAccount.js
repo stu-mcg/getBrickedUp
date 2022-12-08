@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
                 res.write('<table align=center><tr><td>First Name</td><td><input type="text" name="firstName" size="50" required></td><tr>');
                 res.write('<tr><td>Last Name</td><td><input type="text" name="lastName" size="50" required></td><tr>');
                 res.write('<tr><td>email</td><td><input type="text" name="email" size="50" required></td><tr>');
-                res.write('<tr><td>Phone Number</td><td><input type="tel" name="phonenum" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" size="50" required></td><tr>');
+                res.write('<tr><td>Phone Number</td><td><input type="tel" name="phonenum" placeholder="[###]-[###]-[####]" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" size="50" required></td><tr>');
                 res.write('<tr><td>Address</td><td><input type="text" name="address" size="50" required></td><tr>');
                 res.write('<tr><td>City</td><td><input type="text" name="city" size="50" required></td><tr>');
                 res.write('<tr><td>State/Province</td><td><input type="text" name="state" size="50" required></td><tr>');

@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
     let name = req.query.productName;
     let categoryName = req.query.categoryName
     if(name == undefined) name = "";
-    
+    if(categoryName == undefined) categoryName = "All";
     /** $name now contains the search string the user entered
      Use it to build a query and print out the results. **/
 
