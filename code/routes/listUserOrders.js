@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const sql = require('mssql');
-const moment = require('moment');
+const auth = require('../auth');
 
 router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
-    res.write('<title>Get Bricked Up Order List</title>');
+    auth.checkAuthentication(req, res);
+    let customer = req.session.authenticatedUser;
+    res.write(`<title>${customer} Order List</title>`);
 
     /** Create connection, and validate that it connected successfully **/
 
@@ -20,8 +22,8 @@ router.get('/', function(req, res, next) {
         try {
             res.write("<h1>Order List</h1>")
             let pool = await sql.connect(dbConfig);
-            let q = "SELECT orderId, orderDate, O.customerId, firstName, lastName, totalAmount FROM ordersummary AS O, customer AS C WHERE O.customerId = C.customerId";
-            let orderHeaders = await pool.request().query(q);
+            let getOrders = "SELECT orderId, orderDate, O.customerId, firstName, lastName, totalAmount FROM ordersummary AS O, customer AS C WHERE O.customerId = C.customerId AND C.userid = @userid";
+            let orderHeaders = await pool.request().input("userid", customer).query(getOrders);
             for (let i = 0; i < orderHeaders.recordset.length; i++) {
                 res.write("<table style= \"background-color: #b0c4ed\"border = \"1\"><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
                 let orderHeader = orderHeaders.recordset[i];

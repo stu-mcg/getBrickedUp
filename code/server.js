@@ -19,6 +19,12 @@ let product = require('./routes/product');
 let displayImage = require('./routes/displayImage');
 let customer = require('./routes/customer');
 let ship = require('./routes/ship');
+let createAccount = require('./routes/createAccount');
+let editAccount = require('./routes/editAccount');
+let insertUser = require('./routes/insertUser');
+let addReview = require('./routes/addReview');
+let listUserOrders = require('./routes/listUserOrders');
+let updateUser = require('./routes/updateUser');
 
 const app = express();
 
@@ -82,7 +88,12 @@ app.use('/product', product);
 app.use('/displayImage', displayImage);
 app.use('/customer', customer);
 app.use('/ship', ship);
-
+app.use('/createAccount', createAccount);
+app.use('/editAccount', editAccount);
+app.use('/insertUser', insertUser);
+app.use('/addReview', addReview);
+app.use('/listUserOrders', listUserOrders);
+app.use('/updateUser', updateUser);
 
 // Starting our Express app
 app.listen(3000)
