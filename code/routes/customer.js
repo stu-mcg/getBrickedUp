@@ -5,16 +5,12 @@ const auth = require('../auth');
 
 router.get('/', function(req, res, next) {
     auth.checkAuthentication(req, res);
+    auth.checkAuthentication(req, res);
     res.setHeader('Content-Type', 'text/html');
     let customer = req.session.authenticatedUser;
-    
-    
-    
     // TODO: Print Customer information
-
     (async function() {
         try {
-            
 	// TODO: Print customer info
         let pool = await sql.connect(dbConfig);
         let q = "SELECT * FROM customer WHERE userid = @username";
@@ -30,8 +26,10 @@ router.get('/', function(req, res, next) {
         res.write(`<tr><td>State</td><td> ${info.recordset[0].state}</td></tr>`);
         res.write(`<tr><td>Postal Code</td><td> ${info.recordset[0].postalCode}</td></tr>`);
         res.write(`<tr><td>Country</td><td> ${info.recordset[0].country}</td></tr>`);
-        res.write(`<tr><td>User ID</td><td> ${info.recordset[0].userid}</td></tr>`);
-        res.write("</table><a href='/'>home</a>");
+        res.write(`<tr><td>User ID</td><td> ${info.recordset[0].userid}</td></tr></table>`);
+        res.write("<table><tr><td><a href='/editAccount'>Edit Account Info</a></td></tr>");
+        res.write("<tr><td><a href='/listUserOrders'>My Orders</a></td></tr></table>");
+        res.write("<tr><td><a href='/'>home</a></td></tr></table>");
         res.end();
 
         } catch(err) {
