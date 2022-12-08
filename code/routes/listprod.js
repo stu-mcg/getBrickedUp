@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
             try {
                 let pool = await sql.connect(dbConfig);
                 res.write("<h1>Search for the products you want to buy:</h1>")
-                res.write("<form method=\"get\" action=\"listprod\"><select size =\"1\" name=\"categoryName\"><option>All</option><option>Beverages</option><option>Condiments</option><option>Confections</option><option>Dairy Products</option><option>Grains/Cereals</option><option>Meat/Poultry</option><option>Produce</option><option>Seafood</option></select><input type=\"text\" name=\"productName\" size=\"50\"><input type=\"submit\" value=\"Submit\"><input type=\"reset\" value=\"Reset\">(Leave blank for all products)</form>");
+                res.write("<form method=\"get\" action=\"listprod\"><select size =\"1\" name=\"categoryName\"><option>All</option><option>Base</option><option>Ultra Light</option><option>Desert</option><option>Cold</option><option>Water</option><option>Utilities</option><option>Beta Testing</option></select><input type=\"text\" name=\"productName\" size=\"50\"><input type=\"submit\" value=\"Submit\"><input type=\"reset\" value=\"Reset\">(Leave blank for all products)</form>");
                 let customer = req.session.authenticatedUser;
                 if(customer){
                     let getUserMostFrequentCategory = 'Select categoryId, count(*) as NUM FROM product AS P, orderproduct AS OP, customer AS C, ordersummary AS OS WHERE P.productId = OP.productId AND OP.orderId = OS.orderId AND C.customerId = OS.customerId AND userid = @userid GROUP BY categoryId ORDER BY num DESC;'
