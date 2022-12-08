@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
             try {
                 res.write("<h1>Search for the products you want to buy:</h1>")
                 res.write("<form method=\"get\" action=\"listprod\"><select size =\"1\" name=\"categoryName\"><option>All</option><option>Beverages</option><option>Condiments</option><option>Confections</option><option>Dairy Products</option><option>Grains/Cereals</option><option>Meat/Poultry</option><option>Produce</option><option>Seafood</option></select><input type=\"text\" name=\"productName\" size=\"50\"><input type=\"submit\" value=\"Submit\"><input type=\"reset\" value=\"Reset\">(Leave blank for all products)</form>");
-                res.write("<h2>All Products</h2>")
+                res.write(`<h2>${categoryName}</h2>`)
                 res.write("<table style= \"background-color: #b0c4ed\" border = \"1\"><tr><th>Add to Cart</th><th>Product Name</th><th>Categories</th><th>Price</th></tr>")
                 let pool = await sql.connect(dbConfig);
                 let q = `SELECT productId, productName, categoryName, productPrice FROM product JOIN category ON product.categoryId=category.categoryId WHERE productName LIKE @name AND categoryName = @categoryName ORDER BY productName ASC`;

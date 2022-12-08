@@ -39,6 +39,7 @@ router.get('/', function(req, res, next) {
                   options: {      
                     encrypt: false,      
                     enableArithAbort:false,
+                    database: 'orders'
                   }
                 })
             let data = fs.readFileSync("./ddl/SQLServer_orderdb.ddl", { encoding: 'utf8' });
