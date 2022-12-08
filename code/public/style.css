@@ -25,6 +25,12 @@
       a.button:hover {
         opacity: 0.8;
       }
+      img{
+        width: 250px;
+        height: 200px;
+        padding-left: .5em;
+      }
+  
    
       
       
