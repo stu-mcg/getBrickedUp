@@ -20,6 +20,7 @@ let displayImage = require('./routes/displayImage');
 let customer = require('./routes/customer');
 let ship = require('./routes/ship');
 let addReview = require('./routes/addReview');
+let listUserOrders = require('./routes/listUserOrders');
 
 const app = express();
 
@@ -81,6 +82,7 @@ app.use('/displayImage', displayImage);
 app.use('/customer', customer);
 app.use('/ship', ship);
 app.use('/addReview', addReview);
+app.use('/listUserOrders', listUserOrders);
 
 
 // Starting our Express app
