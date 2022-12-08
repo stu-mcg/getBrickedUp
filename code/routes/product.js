@@ -15,38 +15,18 @@ router.get('/', function(req, res, next) {
             productId = () => info.productId;
             productPrice = () => info.productPrice;
             productDesc = () => info.productDesc;
+            prodNameURL = () => info.productName.replace(/ /g, '%20');
 
-           if(info.productImageURL != null && info.productImage != null){
-                images = () => `<img src = ${info.productImageURL}> <img src = displayImage?id=${info.productId}`
+           if(info.productImageURL != null ){
+                images = () => `<img src = ${info.productImageURL}>`
                return res.render('prod',{layout: 'main', 
                 title: productName(), 
                 productId: productId(), 
                 productName: productName(),
                 productPrice: productPrice(),
                 images: images(),
-                productDesc: productDesc()
-            });
-            }
-            else if(info.productImageURL != null && info.productImage == null ){
-                images = () => `<img src = ${info.productImageURL}>`
-                return res.render('prod',{layout: 'main', 
-                 title: productName(), 
-                 productId: productId(), 
-                 productName: productName(),
-                 productPrice: productPrice(),
-                 images: images(),
-                 productDesc: productDesc()
-            });
-            }
-            else if((info.productImage != null && info.productImageURL == null)){
-                images = () => `<img src = displayImage?id=${info.productId}`
-                return res.render('prod',{layout: 'main', 
-                title: productName(), 
-                productId: productId(), 
-                productName: productName(),
-                productPrice: productPrice(),
-                images: images(),
-                productDesc: productDesc()
+                productDesc: productDesc(),
+                prodNameURL: prodNameURL()
             });
             }
             else{
@@ -55,7 +35,8 @@ router.get('/', function(req, res, next) {
                 productId: productId(), 
                 productName: productName(),
                 productPrice: productPrice(),
-                productDesc: productDesc()
+                productDesc: productDesc(),
+                prodNameURL: prodNameURL()
             });
         }
        

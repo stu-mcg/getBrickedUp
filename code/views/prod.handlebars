@@ -1,12 +1,19 @@
+<style>
+    div{
+    text-align : center
+    }
+</style>
 {{> header}}
-<h2>ID: {{productId}}</h2>
-<h2>Name: {{productName}}</h2>
-<h2>Price: {{productPrice}}</h2>
-<p>Image: </p>
-{{{images}}}
-<br>
-<p>Description: {{productDesc}}</p>
-<a class = "button" href = addcart?id={{productId}}&name={{productName}}&price={{productPrice}}>Add to Cart</a>
-<a class = "button" href = "listProd">Continue Shopping</a>
+<div>
+    <h2>ID: {{productId}}</h2>
+    <h2>Name: {{productName}}</h2>
+    <h2>Price: ${{productPrice}}0 CAD</h2>
+    {{{images}}}
+    <br>
+    <p>{{productDesc}}</p>
+    <a class = "button" href = addcart?id={{productId}}&name={{prodNameURL}}&price={{productPrice}}>Add to Cart</a>
+    <a class = "button" href = "listProd">Continue Shopping</a>
+</div>
+
 
 
