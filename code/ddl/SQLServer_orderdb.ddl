@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 --DROP TABLE review;
 --DROP TABLE shipment;
 --DROP TABLE productinventory;
@@ -9,6 +10,9 @@
 --DROP TABLE ordersummary;
 --DROP TABLE paymentmethod;
 --DROP TABLE customer;
+=======
+
+>>>>>>> 80185c2d05cb0c54f5943540757aadfb86257955
 
 CREATE TABLE customer (
     customerId          INT IDENTITY,
