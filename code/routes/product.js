@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 
             let getReviews = `SELECT reviewRating, reviewDate, reviewComment, userid FROM review as R, customer AS C WHERE C.customerId = R.customerId and productId = @productId;`
             reviews = (await pool.request().input("productId", productId).query(getReviews)).recordset
-            let reviewsHbs = () => [];
+            let reviewsHbs = [];
             for(let i = 0; i < reviews.length; i++){
                 let review = reviews[i]
                 reviewsHbs[i] = {userid:`${review.userid}`,
@@ -31,7 +31,9 @@ router.get('/', function(req, res, next) {
                             }         
             }
             
-           if(info.productImageURL != null ){
+            console.dir(reviewsHbs);
+
+            if(info.productImageURL != null ){
                 images = () => `<img src = ${info.productImageURL}>`
                return res.render('prod',{layout: 'main', 
                 title: productName(), 
@@ -41,7 +43,7 @@ router.get('/', function(req, res, next) {
                 images: images(),
                 productDesc: productDesc(),
                 prodNameURL: prodNameURL(),
-                reviews:reviewsHbs()
+                reviews:reviewsHbs
             });
             }
             else{

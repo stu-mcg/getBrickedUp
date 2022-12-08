@@ -1,6 +1,6 @@
 <style>
     div{
-    text-align : center
+    text-align : center;
     }
 </style>
 {{> header}}
@@ -16,7 +16,7 @@
     <br><br>
     <h3>Leave a review:</h3>
     <form action="/addReview">
-    <input type="hidden" id="productId" name="productId" value={{productId}}>
+    <input type="hidden" id="productId" name="productId" value="{{productId}}">
         <label>Rating:</label>
         <select id="rating" name="rating">
             <option value="1">1</option>
@@ -31,10 +31,10 @@
         <input type="submit" value="Submit">
     </form>
     <br><br>
-    {{#each review}}
-    <div style = "border:1px solid black">
-        <h3>{{this.userid}} rated {{this.reviewRating}}/5 on {{this.reviewDate}}</h3>
-        <p>{{this.reviewComment}}</p><br>
+    {{#each reviews}}
+    <div style = "border:2px solid black; display:inline-block; padding-left: 15px; padding-right: 15px;">
+        <h3>{{userid}} rated {{reviewRating}}/5 on {{reviewDate}}</h3>
+        <p>{{reviewComment}}</p><br>
     </div>
     {{/each}}
 </div>
