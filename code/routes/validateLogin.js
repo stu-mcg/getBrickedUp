@@ -11,7 +11,7 @@ router.post('/', function(req, res) {
         req.session.authenticatedUser = authenticatedUser
         if (authenticatedUser) {
             let originalUrl = req.session.originalUrl
-            req.session.originalUrl = "/"
+            if(!originalUrl) originalUrl = "/"
             res.redirect(originalUrl);
         } else {
             req.session.loginMessage = "Incorrect login details";
