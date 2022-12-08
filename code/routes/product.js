@@ -30,9 +30,9 @@ router.get('/', function(req, res, next) {
                                 reviewDate: `${new Date(review.reviewDate).toDateString()}`
                             }         
             }
-            
-            console.dir(reviewsHbs);
-
+            errorMessage = () => req.query.reviewFailedMessage;
+            //console.dir(reviewsHbs);
+            //console.dir("peepee" + req.query.reviewFailedMessage);
             if(info.productImageURL != null ){
                 images = () => `<img src = ${info.productImageURL}>`
                return res.render('prod',{layout: 'main', 
@@ -43,7 +43,8 @@ router.get('/', function(req, res, next) {
                 images: images(),
                 productDesc: productDesc(),
                 prodNameURL: prodNameURL(),
-                reviews:reviewsHbs
+                reviews:reviewsHbs,
+                errorMessage: errorMessage()
             });
             }
             else{
@@ -54,7 +55,8 @@ router.get('/', function(req, res, next) {
                 productPrice: productPrice(),
                 productDesc: productDesc(),
                 prodNameURL: prodNameURL(),
-                reviews:reviewsHbs()
+                reviews:reviewsHbs,
+                errorMessage: errorMessage()
             });
         }
 
