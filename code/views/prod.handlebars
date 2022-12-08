@@ -13,6 +13,30 @@
     <p>{{productDesc}}</p>
     <a class = "button" href = addcart?id={{productId}}&name={{prodNameURL}}&price={{productPrice}}>Add to Cart</a>
     <a class = "button" href = "listProd">Continue Shopping</a>
+    <br><br>
+    <h3>Leave a review:</h3>
+    <form action="/addReview">
+    <input type="hidden" id="productId" name="productId" value="${productId}">
+        <label>Rating:</label>
+        <select id="rating" name="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <p>Comment:</p>
+        <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+    <br><br>
+    {{#each review}}
+    <div style = "border:1px solid black">
+        <h3>{{this.userid}} rated {{this.reviewRating}}/5 on {{this.reviewDate}}</h3>
+        <p>{{this.reviewComment}}</p><br>
+    </div>
+    {{/each}}
 </div>
 
 
