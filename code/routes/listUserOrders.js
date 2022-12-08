@@ -36,6 +36,7 @@ router.get('/', function(req, res, next) {
                     res.write(`<tr><td>${orderProduct.productId}</td><td>${orderProduct.quantity}</td><td>$${orderProduct.price.toFixed(2)}</td></tr>`)
                 }
                 res.write("</table></td></tr></table><br>");
+                res.write("</table><a href='/'>home</a>");
             }
             res.end();
         } catch(err) {
