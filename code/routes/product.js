@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
             let getProductInfo = "SELECT productId, productName, productPrice, productImageURL, productImage, productDesc FROM product WHERE productId = @productId"
             let info = await (await pool.request().input("productId", productId).query(getProductInfo)).recordset[0]
 
-            productName = () => info.productName; 
+            productName = () => info.productName.replace(/ /g, '%20'); 
             productId = () => info.productId;
             productPrice = () => info.productPrice;
             productDesc = () => info.productDesc;
