@@ -7,7 +7,8 @@ router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
     res.write("<title>YOUR NAME Grocery Order Processing</title>");
 
-    let customerId = req.query.customerId;
+    let username = req.query.username;
+    //let customerId = req.query.customerId;
     let password = req.query.password;
 
     let productList = false;
@@ -27,13 +28,31 @@ router.get('/', function(req, res, next) {
         try {
             let pool = await sql.connect(dbConfig);
             //check id is valid
-            let getCustomerIds = `SELECT customerId FROM customer`;
-            let ids = await (await pool.request().query(getCustomerIds)).recordset;
-            if(!ids.find(e => e.customerId == customerId)){
-                res.write("<h2>Invalid customer id entered, <a href = 'checkout'>try again</a></h2>")
+            // let getCustomerIds = `SELECT customerId FROM customer`;
+            // let ids = await (await pool.request().query(getCustomerIds)).recordset;
+            // if(!ids.find(e => e.customerId == customerId)){
+            //     res.write("<h2>Invalid customer id entered, <a href = 'checkout'>try again</a></h2>")
+            //     res.end();
+            //     return;
+            // }
+            //check username valid
+            let getUsernames = "SELECT userid FROM customer"
+            let usernames = await pool.request().query(getUsernames);
+            let valid = false
+            for(let i = 0; i<usernames.recordset.length;i++){
+                if(usernames.recordset[i].userid == username){
+                    valid = true;
+                }
+            }
+            if(!valid){
+                res.write("<h2>Invalid username entered, <a href = 'checkout'>try again</a></h2>")
                 res.end();
                 return;
             }
+            //get id
+            let getId = "SELECT customerId FROM customer WHERE userid = @username"
+            let customerId = await (await pool.request().input('username', username).query(getId)).recordset[0].customerId;
+
             //check password
             let getPassword = "SELECT password FROM CUSTOMER WHERE customerId = @customerId"
             let passwordResult = await pool.request().input('customerId', customerId).query(getPassword);
