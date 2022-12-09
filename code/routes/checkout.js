@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
     res.write("<h1>Login to complete the transaction:</h1>");
 
     res.write('<form method="get" action="order">');
-    res.write('Customer Id: <input type="text" name="customerId" size="50"><br>');
+    res.write('Username: <input type="text" name="username" size="50"><br>');
     res.write('Password: <input type="password", name="password" size="50"><br>');
     res.write('<input type="submit" value="Submit">');
     res.write('</form>');
