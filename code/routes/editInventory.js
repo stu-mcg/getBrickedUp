@@ -14,16 +14,17 @@ router.get('/', function(req, res, next) {
     let newQuantity = req.query.qty;
     (async function() {
         try {
-            res.write("<a href='/'>home</a>");
-            res.write("<h1>Update Inventory</h1>");
+            res.write("<h2 align=\"center\"><a href='/'>Home</a></h2>");
+            res.write("<h2 align=\"center\"><a href='/admin'>Administrators</a></h2>");
+            res.write("<h1 align=\"center\">Update Inventory</h1>");
             let pool = await sql.connect(dbConfig);
-            res.write("<form method=\"get\" action=\"editInventory\">Select Warehouse\t<select size =\"1\" name=\"warehouseId\">");
+            res.write("<form align=\"center\" method=\"get\" action=\"editInventory\">Select Warehouse\t<select size =\"1\" name=\"warehouseId\">");
             let getWarehouses = "SELECT warehouseId FROM warehouse"
             let warehouse = await pool.request().query(getWarehouses)
             for(let i = 0; i < warehouse.recordset.length; i++){
                 res.write(`<option>${warehouse.recordset[i].warehouseId}</option>`)
             }
-            res.write("</select><input type=\"submit\" value=\"Submit\"><br>")
+            res.write("</select><input type=\"submit\" value=\"Submit\"><br><br>")
 
             if(warehouseId != undefined && warehouseId != null){
                 let getProducts = "SELECT productId FROM product"   
@@ -33,7 +34,7 @@ router.get('/', function(req, res, next) {
                     let product = products.recordset[j];
                     res.write(`<option>${product.productId}</option>`)
                 }
-                res.write("</select><br>")
+                res.write("</select><br><br>")
                 res.write(`Enter new Quantity<input type="number" name="qty" size="10" required><input type="submit" value="Submit"></form><br>`)
             }
             if((warehouseId != null && warehouseId != undefined) && (productId != null && productId != undefined) && (newQuantity != null && newQuantity != undefined) && newQuantity > 0){
