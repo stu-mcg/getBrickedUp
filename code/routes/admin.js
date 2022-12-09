@@ -22,6 +22,7 @@ router.get('/', function(req, res, next) {
             // const chartjs = require('chart.js');
 
 	    // TODO: Write SQL query that prints out total order amount by day
+            res.write("<a href='/displayInventory'>Product Inventory by Warehouse</a><br>");
             res.write(`<h1 align=center><a href='/'>home</a></h1>`);
 
             let totalQ = "SELECT SUM(totalAmount) AS total, COUNT(*) AS orders FROM ordersummary";

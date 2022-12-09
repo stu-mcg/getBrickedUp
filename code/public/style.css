@@ -10,6 +10,8 @@
         font-weight: 300;
         margin: 0 0 0 8px; 
         font-weight: bold;
+        text-align:center;
+
     }
    
     a.button {
@@ -18,7 +20,7 @@
         padding: 14px 8px;
         margin: 10px 2px;
         border: none;
-        cursor: grab;
+        cursor: pointer;
         width: 48%;
         text-decoration: none;
     }

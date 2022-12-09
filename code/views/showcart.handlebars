@@ -1,0 +1,56 @@
+<style>
+    div{
+        text-align: center;
+    }
+    .center{
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .remove{
+              background-color: #01050b;
+        color: white;
+        padding: 4px 5px;
+        margin: 5px 2px;
+        border: none;
+        width: 48%;
+        text-decoration: none;
+        cursor: pointer;
+
+    }
+   
+</style>
+{{>header}}
+{{#if cart}}
+<h1>Your Shopping Cart</h1>
+
+<div>
+<table class= "center">
+    <tr>
+        <th>Product Id |</th>
+        <th>Product Name |</th>
+        <th>Quantity</th>
+    {{#each cart}}
+    <tr>
+        <td>{{productId}}</td>
+        <td>{{productName}}</td>
+        <td align="center"><a href="addcart?id={{productId}}&name={{productNameURL}}&price={{productPrice}}&amount=-1" style="text-decoration: none">-</a>{{productQuantity}}<a href="addcart?id={{productId}}&name={{productNameURL}}&price={{productPrice}}&amount=1" style="text-decoration: none">+</a></td>
+        <td align="right">${{productPriceHbs}}</td>
+        <td align="">{{price}}</td>
+        <td><a href="addcart?id={{productId}}&name={{productNameURL}}&price={{productPrice}}&amount={{productQuantityNeg}}" class = "remove">remove all</a></td>
+    </tr>
+    {{/each}}
+    <tr>
+        <br>
+        <td colspan="4" align="right"><b>Order Total: </b></td><td align="right">${{total}} CAD</td>
+    </tr>
+</table>
+<br>
+<h3><a href="checkout" class = "button">Check Out</a></h3>
+<br>
+<h3><a href="listprod" class = "button">Continue Shopping</a></h3>
+{{else}}
+<h1>Your shopping cart is empty!</h1>
+<br>
+<h2><a href="listprod" class = "button">Continue Shopping</a></h2>
+{{/if}}
+</div>
