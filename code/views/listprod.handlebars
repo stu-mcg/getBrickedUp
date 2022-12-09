@@ -91,21 +91,26 @@ body {
     <input type="submit" value="Submit">
     <input type="reset" value="Reset">(Leave blank for all products)
 </form>
-{{#if customer}}
+<br>
+{{#if recommendedProducts}}
 <h2>Recommendations for {{customer}} based on previous orders</h2>
+<br>
 <div class="row">
+    {{#each recommendedProducts}} 
     <div class="column">
         <div class="card">
-            <img src={{productImageURL}} alt={{productId}} style="width:100%">
+            <a href="product?id={{productId}}"><img src={{productImageURL}} alt={{productId}} style="width:100%"></a>
             <h1><a href="product?id={{productId}}">{{productName}}</a></h1>
             <p class="price">${{productPrice}}</p>
             <p>{{productCategory}}</p>
             <p><a class = "button" href = addcart?id={{productId}}&name={{productNameUrl}}&price={{productPriceUrl}}>Add to Cart</a></p>
         </div>
     </div>
+    {{/each}}
 </div>
-{{/if}}
+<br>
 <h2>All Products</h2>
+{{/if}}
 <br>
 <div class="row">
     {{#each products}} 

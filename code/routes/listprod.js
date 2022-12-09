@@ -38,14 +38,16 @@ router.get('/', function(req, res, next) {
                 if(customer){
                     let getUserMostFrequentCategory = 'Select categoryId, count(*) as NUM FROM product AS P, orderproduct AS OP, customer AS C, ordersummary AS OS WHERE P.productId = OP.productId AND OP.orderId = OS.orderId AND C.customerId = OS.customerId AND userid = @userid GROUP BY categoryId ORDER BY num DESC;'
                     let mostFrequentCategories = (await pool.request().input('userid', customer).query(getUserMostFrequentCategory));
-                    console.dir(mostFrequentCategories)
+                    //console.dir(mostFrequentCategories)
                     if(mostFrequentCategories.recordset.length > 0){
-                        mostFrequentCategories = mostFrequentCategories.resultset[0].categoryId
+                        let categoryId = mostFrequentCategories.recordset[0].categoryId
                         let getProductsInCategory = "SELECT productId, productName, categoryName, productPrice, productImageURL FROM product JOIN category ON product.categoryId=category.categoryId WHERE category.categoryId = @categoryId"
                         let recommendedProducts = (await pool.request().input("categoryId", categoryId).query(getProductsInCategory)).recordset
-                        for(let i = 0; i < 3; i++){
-                            let randomIndex = Math.floor(Math.random() * recommendedProducts.length)
-                            let product = recommendedProducts[randomIndex]
+                        console.dir(recommendedProducts.length);
+                        for(let i = 0; i < recommendedProducts.length && i < 4; i++){
+                           // let randomIndex = Math.floor(Math.random() * recommendedProducts.length)
+                            console.dir(i);
+                            let product = recommendedProducts[i]
                             recProdHbs[i] = {productId:`${product.productId}`,
                                         productNameUrl:`${product.productName.replace(/ /g, '%20')}`,
                                         productPriceUrl: `${product.productPrice}`,
@@ -56,12 +58,6 @@ router.get('/', function(req, res, next) {
                                         customer:`${customer}`
                                 }         
                         }
-                        // for(let i = 0; i < 3; i++){
-                        //     let randomIndex = Math.floor(Math.random() * recommendedProducts.length)
-                        //     let product = recommendedProducts[randomIndex];
-                        //     res.write(`<tr><td style=\"text-align: center\"><a href = addcart?id=${product.productId}&name=${product.productName.replace(/ /g, '%20')}&price=${product.productPrice}> Add </a></td><td><a href = "product?id=${product.productId}">${product.productName}</a></td><td>${product.categoryName}</td><td>${product.productPrice.toFixed(2)}</td></tr>`)
-                        //     recommendedProducts.splice(randomIndex, 1)
-                        // }
                     }
                 }
                 let q = `SELECT productId, productName, categoryName, productPrice, productImageURL FROM product JOIN category ON product.categoryId=category.categoryId WHERE productName LIKE @name AND categoryName = @categoryName ORDER BY productName ASC`;
