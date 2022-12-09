@@ -76,7 +76,7 @@ router.get('/', function(req, res, next) {
                 }
             };
             // const chart = new chartjs('line',{data,options});
-            // res.write(chart);
+         
             
             res.write(`</table><h1>List of all customers</h1>`);
             let cusQ = "SELECT customerId, firstName, lastName FROM customer";
@@ -86,6 +86,7 @@ router.get('/', function(req, res, next) {
                 let customerL = customerList.recordset[i];
                 res.write(`<tr><td style =\"text-align: center\"> ${customerL.firstName}</td><td>${customerL.lastName}</td><td>${customerL.customerId}</td></tr>`);
             }
+            res.write(`<a href='/addprod'>Add a New Product</a>`);
 
             res.write('')
             
