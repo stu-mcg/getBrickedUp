@@ -4,11 +4,13 @@ const sql = require('mssql');
 
 router.get('/', function(req, res, next) {
 
-    let prodName = req.query.prodName;
-    let categoryId = req.query.categoryId;
-    let prodDesc = req.query.prodDesc;
-    let prodPrice = req.query.prodPrice;
+        let prodName = req.query.prodName;
+        let categoryId = req.query.categoryId;
+        let prodDesc = req.query.prodDesc;
+        let prodPrice = req.query.prodPrice;
 
+
+        // console.log(req.body.action);
     (async function(){
         try{
             let pool = await sql.connect(dbConfig);

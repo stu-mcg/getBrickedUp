@@ -29,6 +29,9 @@ let addprod = require('./routes/addprod');
 let insertProd = require('./routes/insertprod');
 let displayInventory = require('./routes/displayInventroy')
 let editInventory = require('./routes/editInventory')
+let updateDelete = require('./routes/updateDelete');
+let updateProd = require('./routes/updateProd');
+
 const app = express();
 
 // Enable parsing of requests for POST requests
@@ -101,5 +104,8 @@ app.use('/addprod', addprod);
 app.use('/insertprod',insertProd);
 app.use('/displayInventory', displayInventory);
 app.use('/editInventory', editInventory);
+app.use('/updateDelete', updateDelete);
+app.use('/updateProd', updateProd);
+
 // Starting our Express app
 app.listen(3000)
