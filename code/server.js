@@ -27,6 +27,8 @@ let listUserOrders = require('./routes/listUserOrders');
 let updateUser = require('./routes/updateUser');
 let addprod = require('./routes/addprod');
 let insertProd = require('./routes/insertprod');
+let updateDelete = require('./routes/updateDelete');
+let updateProd = require('./routes/updateProd');
 
 const app = express();
 
@@ -98,6 +100,8 @@ app.use('/listUserOrders', listUserOrders);
 app.use('/updateUser', updateUser);
 app.use('/addprod', addprod);
 app.use('/insertprod',insertProd);
+app.use('/updateDelete', updateDelete);
+app.use('/updateProd', updateProd);
 
 // Starting our Express app
 app.listen(3000)
