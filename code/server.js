@@ -25,7 +25,8 @@ let insertUser = require('./routes/insertUser');
 let addReview = require('./routes/addReview');
 let listUserOrders = require('./routes/listUserOrders');
 let updateUser = require('./routes/updateUser');
-
+let displayInventory = require('./routes/displayInventroy')
+let editInventory = require('./routes/editInventory')
 const app = express();
 
 // Enable parsing of requests for POST requests
@@ -91,6 +92,7 @@ app.use('/insertUser', insertUser);
 app.use('/addReview', addReview);
 app.use('/listUserOrders', listUserOrders);
 app.use('/updateUser', updateUser);
-
+app.use('/displayInventory', displayInventory);
+app.use('/editInventory', editInventory);
 // Starting our Express app
 app.listen(3000)
