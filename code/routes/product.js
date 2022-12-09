@@ -7,6 +7,8 @@ router.get('/', function(req, res, next) {
     (async function() {
         try {
             let pool = await sql.connect(dbConfig);
+            let customer = req.session.authenticatedUser;
+            customerHbs = () => customer;
 
             productId = req.query.id
             let getProductInfo = "SELECT productId, productName, productPrice, productImageURL, productImage, productDesc FROM product WHERE productId = @productId"
@@ -44,7 +46,8 @@ router.get('/', function(req, res, next) {
                 productDesc: productDesc(),
                 prodNameURL: prodNameURL(),
                 reviews:reviewsHbs,
-                errorMessage: errorMessage()
+                errorMessage: errorMessage(),
+                username: customerHbs
             });
             }
             else{
@@ -56,7 +59,8 @@ router.get('/', function(req, res, next) {
                 productDesc: productDesc(),
                 prodNameURL: prodNameURL(),
                 reviews:reviewsHbs,
-                errorMessage: errorMessage()
+                errorMessage: errorMessage(),
+                username: customerHbs
             });
         }
 

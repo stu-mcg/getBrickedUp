@@ -79,7 +79,7 @@ router.get('/', function(req, res, next) {
                 //console.dir(recProdHbs);
                 //console.dir(productsHbs);
                 return res.render('listprod',{layout: 'main',
-                customer:customerHbs(),
+                username:customerHbs(),
                 recommendedProducts: recProdHbs, 
                 products:productsHbs
                 });

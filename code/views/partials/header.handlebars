@@ -79,19 +79,23 @@ a {
 	}
 
 img.logo{
-    width: 160px;
-    height: 70px;
+    width: 150px;
+    height: 60px;
     padding-left: .5em;
 }
 }  
 </style>
 <header class="header">
-	<img  class = "logo" src="img/gbuLogo.png">
+	<a href="/"><img  class = "logo" src="img/gbuLogo.png"></a>
 	<ul class="main-nav">
 		<li><a href="/">Home</a></li>
 		<li><a href="/showcart">Cart</a></li>
-		<li><a href="#">Something</a></li>
-		<li><a href="/logout">Logout</a></li>
+		{{#if username}}
+		   	<li><a href="/editAccount">Signed in as: {{username}}</a></li>
+			<li><a href="/logout">Logout</a></li>
+		{{else}}
+			<li><a href="/login">Login</a></li>
+        {{/if}}
 
 	</ul>
 </header> 
