@@ -8,12 +8,8 @@ router.get('/', function (req, res) {
     if(req.session.authenticatedUser){
         username=req.session.authenticatedUser
     }	
-    res.render('index', {
-        title: "Let's Get Bricked Up",
-      
-        username: username
-        // HINT: Look at the /views/index.handlebars file
-        // to get an idea of how the index page is being rendered
+    res.render('index', {layout:'main',
+                username: username
     });
     
 })

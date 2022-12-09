@@ -25,6 +25,8 @@ let insertUser = require('./routes/insertUser');
 let addReview = require('./routes/addReview');
 let listUserOrders = require('./routes/listUserOrders');
 let updateUser = require('./routes/updateUser');
+let addprod = require('./routes/addprod');
+let insertProd = require('./routes/insertprod');
 let displayInventory = require('./routes/displayInventroy')
 let editInventory = require('./routes/editInventory')
 const app = express();
@@ -58,10 +60,13 @@ app.use(session({
     maxAge: 60000,
   }
 }))
-
+//
 // Setting up the rendering engine
-app.engine('handlebars', exphbs());
+app.engine('handlebars', exphbs({
+  layoutsDir: `${__dirname}/views/layouts`,
+}));
 app.set('view engine', 'handlebars');
+
 
 // Setting up where static assets should
 // be served from.
@@ -92,6 +97,8 @@ app.use('/insertUser', insertUser);
 app.use('/addReview', addReview);
 app.use('/listUserOrders', listUserOrders);
 app.use('/updateUser', updateUser);
+app.use('/addprod', addprod);
+app.use('/insertprod',insertProd);
 app.use('/displayInventory', displayInventory);
 app.use('/editInventory', editInventory);
 // Starting our Express app

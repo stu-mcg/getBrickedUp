@@ -1,0 +1,129 @@
+<style>
+    h2{
+        text-align: center;
+    }
+    .img{
+        width: 200px;
+        height: 200px;
+    }
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        height: 500px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+        padding: 16px;
+        background-color: #f1f1f1;
+    }
+    h1{
+        font-size: 28px;
+    }
+    .price {
+        color: grey;
+        font-size: 22px;
+    }
+
+    .card a.button {
+        border: none;
+        outline: 0;
+        padding: 12px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+    }
+
+    .card a.button:hover {
+        opacity: 0.7;
+    }
+    * {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding in columns */
+.row {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns - one column layout (vertical) on small screens */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+</style>
+{{>header}}
+
+<h1>Search for the products you want to buy:</h1>
+<form method="get" action="listprod" align = "center">
+    <select size ="1" name="categoryName">
+        <option>All</option>
+        <option>Base</option>
+        <option>Ultra Light</option>
+        <option>Desert</option>
+        <option>Cold</option>
+        <option>Water</option>
+        <option>Utilities</option>
+        <option>Beta Testing</option>
+    </select>
+    <input type="text" name="productName" size="50">
+    <input type="submit" value="Submit">
+    <input type="reset" value="Reset">(Leave blank for all products)
+</form>
+<br>
+{{#if recommendedProducts}}
+<h2>Recommendations for {{customer}} based on previous orders</h2>
+<br>
+<div class="row">
+    {{#each recommendedProducts}} 
+    <div class="column">
+        <div class="card">
+            <a href="product?id={{productId}}"><img src={{productImageURL}} alt={{productId}} style="width:100%"></a>
+            <h1><a href="product?id={{productId}}">{{productName}}</a></h1>
+            <p class="price">${{productPrice}}</p>
+            <p>{{productCategory}}</p>
+            <p><a class = "button" href = addcart?id={{productId}}&name={{productNameUrl}}&price={{productPriceUrl}}>Add to Cart</a></p>
+        </div>
+    </div>
+    {{/each}}
+</div>
+<br>
+<h2>All Products</h2>
+{{/if}}
+<br>
+<div class="row">
+    {{#each products}} 
+    <div class="column">
+        <div class="card">
+            <a href="product?id={{productId}}"><img src={{productImageURL}} alt={{productId}} style="width:100%"></a>
+            <h1><a href="product?id={{productId}}">{{productName}}</a></h1>
+            <p class="price">${{productPrice}}</p>
+            <p>{{productCategory}}</p>
+            <p><a class = "button" href = addcart?id={{productId}}&name={{productNameUrl}}&price={{productPriceUrl}}>Add to Cart</a></p>
+        </div>
+        <br>
+    </div>
+    {{/each}}
+</div>
+

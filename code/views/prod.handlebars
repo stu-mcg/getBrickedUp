@@ -1,0 +1,49 @@
+<style>
+    div{
+    text-align : center;
+    }
+</style>
+{{> header}}
+<div>
+    <h2>ID: {{productId}}</h2>
+    <h2>Name: {{productName}}</h2>
+    <h2>Price: ${{productPrice}}0 CAD</h2>
+    {{{images}}}
+    <br>
+    <p>{{productDesc}}</p>
+    <a class = "button" href = addcart?id={{productId}}&name={{prodNameURL}}&price={{productPrice}}>Add to Cart</a>
+    <a class = "button" href = "listProd">Continue Shopping</a>
+    <br><br>
+    <h3>Leave a review:</h3>
+    {{#if errorMessage}}
+        <p>{{errorMessage}}</p>
+    {{/if}}
+    <form action="/addReview">
+    <input type="hidden" id="productId" name="productId" value="{{productId}}">
+        <label>Rating:</label>
+        <select id="rating" name="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <p>Comment:</p>
+        <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    <h3>Reviews:</h3>
+
+    <br>
+    {{#each reviews}}
+    <div style = "border:2px solid black; display:inline-block; padding-left: 15px; padding-right: 15px;">
+        <h3>{{userid}} rated {{reviewRating}}/5 on {{reviewDate}}</h3>
+        <p>{{reviewComment}}</p><br>
+    </div>
+    {{/each}}
+</div>
+
+
+

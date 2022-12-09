@@ -4,13 +4,12 @@ const sql = require('mssql');
 
 router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
-    res.write("<title>YOUR NAME Grocery</title>")
 
     // Get the product name to search for
     let name = req.query.productName;
     let categoryName = req.query.categoryName
     if(name == undefined) name = "";
-    if(categoryName == undefined) categoryName = "All";
+    
     /** $name now contains the search string the user entered
      Use it to build a query and print out the results. **/
 
@@ -32,40 +31,59 @@ router.get('/', function(req, res, next) {
         (async function() {
             try {
                 let pool = await sql.connect(dbConfig);
-                res.write("<h1>Search for the products you want to buy:</h1>")
-                res.write("<form method=\"get\" action=\"listprod\"><select size =\"1\" name=\"categoryName\"><option>All</option><option>Base</option><option>Ultra Light</option><option>Desert</option><option>Cold</option><option>Water</option><option>Utilities</option><option>Beta Testing</option></select><input type=\"text\" name=\"productName\" size=\"50\"><input type=\"submit\" value=\"Submit\"><input type=\"reset\" value=\"Reset\">(Leave blank for all products)</form>");
                 let customer = req.session.authenticatedUser;
+                let recProdHbs = [];
+                let productsHbs = [];
+                customerHbs = () => customer;
                 if(customer){
                     let getUserMostFrequentCategory = 'Select categoryId, count(*) as NUM FROM product AS P, orderproduct AS OP, customer AS C, ordersummary AS OS WHERE P.productId = OP.productId AND OP.orderId = OS.orderId AND C.customerId = OS.customerId AND userid = @userid GROUP BY categoryId ORDER BY num DESC;'
                     let mostFrequentCategories = (await pool.request().input('userid', customer).query(getUserMostFrequentCategory));
-                    console.dir(mostFrequentCategories)
+                    //console.dir(mostFrequentCategories)
                     if(mostFrequentCategories.recordset.length > 0){
-                        res.write(`<h2>Recommendations for ${customer} based on previous orders</h2>`)
-                        mostFrequentCategories = mostFrequentCategories.resultset[0].categoryId
-                        let getProductsInCategory = "SELECT productId, productName, categoryName, productPrice FROM product JOIN category ON product.categoryId=category.categoryId WHERE category.categoryId = @categoryId"
+                        let categoryId = mostFrequentCategories.recordset[0].categoryId
+                        let getProductsInCategory = "SELECT productId, productName, categoryName, productPrice, productImageURL FROM product JOIN category ON product.categoryId=category.categoryId WHERE category.categoryId = @categoryId"
                         let recommendedProducts = (await pool.request().input("categoryId", categoryId).query(getProductsInCategory)).recordset
-                        res.write("<table style= \"background-color: #b0c4ed\" border = \"1\"><tr><th>Add to Cart</th><th>Product Name</th><th>Categories</th><th>Price</th></tr>")
-                        for(let i = 0; i < 3; i++){
-                            let randomIndex = Math.floor(Math.random() * recommendedProducts.length)
-                            let product = recommendedProducts[randomIndex];
-                            res.write(`<tr><td style=\"text-align: center\"><a href = addcart?id=${product.productId}&name=${product.productName.replace(/ /g, '%20')}&price=${product.productPrice}> Add </a></td><td><a href = "product?id=${product.productId}">${product.productName}</a></td><td>${product.categoryName}</td><td>${product.productPrice.toFixed(2)}</td></tr>`)
-                            recommendedProducts.splice(randomIndex, 1)
+                        console.dir(recommendedProducts.length);
+                        for(let i = 0; i < recommendedProducts.length && i < 4; i++){
+                           // let randomIndex = Math.floor(Math.random() * recommendedProducts.length)
+                            console.dir(i);
+                            let product = recommendedProducts[i]
+                            recProdHbs[i] = {productId:`${product.productId}`,
+                                        productNameUrl:`${product.productName.replace(/ /g, '%20')}`,
+                                        productPriceUrl: `${product.productPrice}`,
+                                        productPrice: `${product.productPrice.toFixed(2)}`,
+                                        productName:`${product.productName}`,
+                                        productCategory: `${product.categoryName}`,
+                                        productImageURL: `${product.productImageURL}`,
+                                        customer:`${customer}`
+                                }         
                         }
-                        res.write("</table>");
                     }
                 }
-                res.write("<table style= \"background-color: #b0c4ed\" border = \"1\"><tr><th>Add to Cart</th><th>Product Name</th><th>Categories</th><th>Price</th></tr>")
-                let q = `SELECT productId, productName, categoryName, productPrice FROM product JOIN category ON product.categoryId=category.categoryId WHERE productName LIKE @name AND categoryName = @categoryName ORDER BY productName ASC`;
+                let q = `SELECT productId, productName, categoryName, productPrice, productImageURL FROM product JOIN category ON product.categoryId=category.categoryId WHERE productName LIKE @name AND categoryName = @categoryName ORDER BY productName ASC`;
                 if(categoryName == 'All' || categoryName == null){
-                    q = `SELECT productId, productName, categoryName, productPrice FROM product JOIN category ON product.categoryId=category.categoryId WHERE productName LIKE @name ORDER BY productName ASC`;
+                    q = `SELECT productId, productName, categoryName, productPrice, productImageURL FROM product JOIN category ON product.categoryId=category.categoryId WHERE productName LIKE @name ORDER BY productName ASC`;
                 }
                 let products = await pool.request().input('name', '%' + name + '%').input('categoryName', categoryName).query(q);
                 for (let i = 0; i < products.recordset.length; i++) {
                     let product = products.recordset[i];
-                    res.write(`<tr><td style=\"text-align: center\"><a href = addcart?id=${product.productId}&name=${product.productName.replace(/ /g, '%20')}&price=${product.productPrice}> Add </a></td><td><a href = "product?id=${product.productId}">${product.productName}</a></td><td>${product.categoryName}</td><td>${product.productPrice.toFixed(2)}</td></tr>`)
+                    productsHbs[i] ={productId:`${product.productId}`,
+                                productNameUrl:`${product.productName.replace(/ /g, '%20')}`,
+                                productPriceUrl: `${product.productPrice}`,
+                                productPrice: `${product.productPrice.toFixed(2)}`,
+                                productName:`${product.productName}`,
+                                productCategory: `${product.categoryName}`,
+                                productImageURL: `${product.productImageURL}`
+                    }
                 }
-                res.write("</table>");
-                res.end();
+                //console.dir(recProdHbs);
+                //console.dir(productsHbs);
+                return res.render('listprod',{layout: 'main',
+                username:customerHbs(),
+                recommendedProducts: recProdHbs, 
+                products:productsHbs
+                });
+
             } catch(err) {
                 console.dir(err);
                 res.write(JSON.stringify(err));

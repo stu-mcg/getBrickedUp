@@ -1,4 +1,17 @@
-<div style="margin:0 auto;text-align:center;display:inline">
+<style>
+form { 
+margin: 0 auto; 
+width:250px;
+}
+input {
+  width: 100%;
+}
+input.submit{
+    width:50%;
+}
+</style>
+
+<div style="margin:0 auto;text-align:center;display:inline" >
 
     <h3>Please Login to System</h3>
 
@@ -7,26 +20,12 @@
     {{/if}}
 
     <br>
-    <form name="MyForm" method=post action="/validateLogin">
-        <table style="display:inline">
-            <tr>
-                <td>
-                    <div align="right">
-                        <font face="Arial, Helvetica, sans-serif" size="2">Username:</font>
-                    </div>
-                </td>
-                <td><input type="text" name="username" size=10 maxlength=10></td>
-            </tr>
-            <tr>
-                <td>
-                    <div align="right">
-                        <font face="Arial, Helvetica, sans-serif" size="2">Password:</font>
-                    </div>
-                </td>
-                <td><input type="password" name="password" size=10 maxlength="10"></td>
-            </tr>
-        </table>
-        <br />
+    <form name="MyForm" method=post action="/validateLogin" display = "center">
+            <font face="Arial, Helvetica, sans-serif" size="2">Username:</font>
+            <input type="text" name="username" >
+             
+            <font face="Arial, Helvetica, sans-serif" size="2">Password:</font>
+            <input type="password" name="password" >              
         <input class="submit" type="submit" name="Submit2" value="Log In">
     </form>
     <h2 align="center"><a href="/createAccount">Create Account</a></h2>
