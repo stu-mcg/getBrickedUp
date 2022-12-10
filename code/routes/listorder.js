@@ -38,7 +38,7 @@ router.get('/', function(req, res, next) {
                     orderDate: `${new Date(orderHeader.orderDate).toLocaleString('en-US', {hour12: false})}`,
                     customerId: `${orderHeader.customerId}`,
                     customerName: `${orderHeader.firstName} ${orderHeader.lastName}`,
-                    totalAmount: `$${orderHeader.totalAmount.toFixed(2)}`
+                    totalAmount: `${orderHeader.totalAmount.toFixed(2)}`
                 }
                 
                 // res.write(`<tr><td>${orderHeader.orderId}</td><td>${new Date(orderHeader.orderDate).toLocaleString('en-US', {hour12: false})}</td><td>${orderHeader.customerId}</td><td>${orderHeader.firstName} ${orderHeader.lastName}</td><td>$${orderHeader.totalAmount.toFixed(2)}</td></tr>`)
@@ -48,7 +48,7 @@ router.get('/', function(req, res, next) {
                 for(let j = 0; j < orderProducts.recordset.length; j++){
                     let orderProduct = orderProducts.recordset[j];
                     //added line
-                    orderP[j]={
+                    orderP[i][j]={
                         pid:`${orderProduct.productId}`,
                         quantity: `${orderProduct.quantity}`,
                         price: `$${orderProduct.price.toFixed(2)}`
