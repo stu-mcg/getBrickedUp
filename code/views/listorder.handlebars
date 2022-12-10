@@ -40,15 +40,15 @@
                         <th>Quantity</th>
                         <th>Price</th>
                     </tr>
-                    {{#each orderP}}
-                        {{#each this}}
-                    <tr>
-                        <td>{{orderP.pid}}</td>
-                        <td>{{orderP.quantity}}</td>
-                        <td>{{orderP.price}}</td>
-                    </tr>
-                    {{/each}}
-                    {{/each}}
+                    
+                        {{#each orderP}}
+                            <tr>
+                                <td>{{pid}}</td>
+                                <td>{{quantity}}</td>
+                                <td>{{price}}</td>
+                            </tr>
+                        {{/each}}
+                    
                 </table>
             </td>
         </tr>
