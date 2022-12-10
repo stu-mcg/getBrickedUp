@@ -1,17 +1,26 @@
 {{>header}}
 <h1 align=center>Customer Profile</h1>
 <style>
-    table{
+    .table{
         width: 70%;
         border-collapse: collapse;
     }
-    th, td{
+    .table th, .table td{
         border: 1px solid black;
         padding: 8px;
         text-align: center;
+        color: #9f3074;
+    }
+    .table2{
+        width:100%,
+        border-collapse:collapse;
+    }
+    .table2 th, .table2 td{
+        padding: 25px;
+        
     }
 </style>
-<table align=center style="width:400">
+<table align=center style="width:400" class="table">
     <tr>
         <td>
             ID
@@ -100,4 +109,16 @@
             {{userId}}
         </td>
     </tr>
+</table>
+<table align=center class="table2">
+    <tr>
+        <th>
+             <h3 align=center><a href='/editAccount' class="button">Edit Account Info</a></h3>
+
+        </th>
+        <th>
+            <h3 align=center><a href='/listUserOrders' class="button">My Orders</a></h3>
+        </th>
+    </tr>
+    
 </table>

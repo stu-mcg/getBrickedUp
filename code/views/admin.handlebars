@@ -1,7 +1,6 @@
 
 {{>header}}
-<br>
-<table align="center">
+<table align="center" class="table2">
     <tr>
         <th><h3 align=center><a href='/addprod' class="button">Add a New Product</a></h3></th>
         <th><h3 align=center><a href='/updateDelete' class="button">Update a Product</a></h3></th>
@@ -13,19 +12,29 @@
 <h1 align=center>Administrator Sales Report by Day</h1>
 
 <style>
-    table{
-        width: 80%;
+    .table{
+        width: 70%;
         border-collapse: collapse;
     }
-    th, td{
+    .table th, .table td{
         border: 1px solid black;
         padding: 8px;
         text-align: center;
+        color: #9f3074;
     }
+    .table2{
+        width:100%,
+        border-collapse:collapse;
+    }
+    .table2 th, .table2 td{
+        padding: 25px;
+        text-align:center
+    }
+    
 </style>
 
 
-<table border="1" align=center>
+<table border="1" align=center class="table">
     <tr>
         <th>Order Date</th>
         <th>Total Order Amount</th>
@@ -39,7 +48,7 @@
 </table>
 
 <h1 align=center>List of all customers</h1>
-<table border=\"1" align=center>
+<table border=\"1" align=center class="table">
     <tr>
         <th>First Name</th>
         <th>Last Name</th>
