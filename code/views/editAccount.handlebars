@@ -1,0 +1,19 @@
+{{>header}}
+<h1 align="center">Update Customer Profile</h1>"
+<form method="get" action="updateUser">
+<table align="center" ><tr><td>ID</td><td>{{customerId}}</td></tr>
+<tr><td>First Name</td><td>{{firstName}}</td></tr>
+<tr><td>Last Name</td><td>{{lastName}}</td></tr>
+<tr><td>Email</td><td><input type="text" name="email" value="{{email}}" size="50" required></td></tr>
+<tr><td>Phone Number</td><td><input type="tel" name="phonenum" value="{{phonenum}}" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" size="50" required></td></tr>
+<tr><td>Address</td><td><input type="text" name="address" value="{{address}}" size="50" required> </td></tr>
+<tr><td>City</td><td><input type="text" name="city" value="{{city}}" size="50" required> </td></tr>
+<tr><td>State</td><td><input type="text" name="state" value="{{state}}" size="50" required> </td></tr>
+<tr><td>Postal Code</td><td><input type="text" name="postalCode" value="{{postalCode}}" size="50" required></td></tr>
+<tr><td>Country</td><td><input type="text" name="country" value="{{country}}" size="50" required> </td></tr>
+<tr><td>User ID</td><td>{{userid}}</td></tr>
+<tr><td>Password</td><td><input type="password" name="password" value="{{password}}" size="50" required> </td></tr></table>
+<table align="center"><tr><td></td><td align="center"><button type="submit" value="Submit">Update</button></td></tr></table></form>
+<br>
+<h2 align="center"><a href='/' class = 'button'>Home</a><h2>
+<br>
