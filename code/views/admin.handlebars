@@ -2,6 +2,20 @@
 <h3 align=center>Total Sales: ${{totalSales}}</h3>
 <h3 align=center>Total Orders: {{totalOrders}}</h3>
 <h1 align=center>Administrator Sales Report by Day</h1>
+
+<style>
+    table{
+        width: 80%;
+        border-collapse: collapse;
+    }
+    th, td{
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+</style>
+
+
 <table border="1" align=center>
     <tr>
         <th>Order Date</th>
@@ -14,6 +28,7 @@
     </tr>
     {{/each}}
 </table>
+
 <h1 align=center>List of all customers</h1>
 <table border=\"1" align=center>
     <tr>

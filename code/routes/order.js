@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
     }
     //check for empty cart
     if(!productList || productList.length == 0){
-        res.write("<h2>There is nothing in the cart, <a href = 'listprod'>return to the shopping page</a></h2>")
+        res.write("<h2 align=center>There is nothing in the cart, <a href = 'listprod'>return to the shopping page</a></h2>")
         res.end()
         return;
     }
@@ -45,7 +45,7 @@ router.get('/', function(req, res, next) {
                 }
             }
             if(!valid){
-                res.write("<h2>Invalid username entered, <a href = 'checkout'>try again</a></h2>")
+                res.write("<h2 align=center>Invalid username entered, <a href = 'checkout'>try again</a></h2>")
                 res.end();
                 return;
             }
@@ -58,7 +58,7 @@ router.get('/', function(req, res, next) {
             let passwordResult = await pool.request().input('customerId', customerId).query(getPassword);
             let customerPassword = passwordResult.recordset[0].password;
             if(password != customerPassword){
-                res.write("<h2>Incorrect password, <a href = 'checkout'>try again</a></h2>")
+                res.write("<h2 align=center>Incorrect password, <a href = 'checkout'>try again</a></h2>")
                 res.end();
                 return;
             }
@@ -88,10 +88,10 @@ router.get('/', function(req, res, next) {
             await pool.request().input('orderId', orderId).query(updatePrice)
             
             //print order summary
-            res.write("<h2>Order Summary</h2>")
+            res.write("<h2 align=center>Order Summary</h2>")
             getOrderSum = "SELECT orderDate, O.customerId, firstName, lastName, totalAmount FROM ordersummary AS O, customer AS C WHERE O.customerId = C.customerId AND orderId = @orderId";
             let orderHeader = await (await pool.request().input('orderId', orderId).query(getOrderSum)).recordset[0];
-            res.write("<table border = \"1\"><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
+            res.write("<table align=center border = \"1\"><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
             res.write(`<tr><td>${orderId}</td><td>${new Date(orderHeader.orderDate).toLocaleString('en-US', {hour12: false})}</td><td>${orderHeader.customerId}</td><td>${orderHeader.firstName} ${orderHeader.lastName}</td><td>$${orderHeader.totalAmount.toFixed(2)}</td></tr>`)
             res.write("<tr><td colspan = \"50\"><table border = \"1\" align=\"right\"><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>")
             getOrderProd = `SELECT productId, quantity, price FROM orderproduct WHERE orderId = @orderId`;
@@ -101,7 +101,7 @@ router.get('/', function(req, res, next) {
                 res.write(`<tr><td>${orderProduct.productId}</td><td>${orderProduct.quantity}</td><td>$${orderProduct.price.toFixed(2)}</td></tr>`)
             }
             res.write("</table></td></tr></table><br>");
-            res.write("<a href='/'>return to home</a>")
+            res.write("<h1 align=center><a href='/'>return to home</a></h1>")
 
             //reset cart
             req.session.productList = [];
