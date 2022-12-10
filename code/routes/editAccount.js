@@ -14,23 +14,35 @@ router.get('/', function(req, res, next) {
         let pool = await sql.connect(dbConfig);
         let q = "SELECT * FROM customer WHERE userid = @username";
         let info = await pool.request().input("username", customer).query(q);
-        res.write("<h1 align=\"center\">Update Customer Profile</h1>");
-        res.write('<form method="get" action="updateUser">');
-        res.write(`<table align="center" ><tr><td>ID</td><td>${info.recordset[0].customerId}</td></tr>`);
-        res.write(`<tr><td>First Name</td><td>${info.recordset[0].firstName}</td></tr>`);
-        res.write(`<tr><td>Last Name</td><td>${info.recordset[0].lastName}</td></tr>`);
-        res.write(`<tr><td>Email</td><td><input type="text" name="email" value="${info.recordset[0].email}" size="50" required></td></tr>`);
-        res.write(`<tr><td>Phone Number</td><td><input type="tel" name="phonenum" value="${info.recordset[0].phonenum}" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" size="50" required></td></tr>`);
-        res.write(`<tr><td>Address</td><td><input type="text" name="address" value="${info.recordset[0].address}" size="50" required> </td></tr>`);
-        res.write(`<tr><td>City</td><td><input type="text" name="city" value="${info.recordset[0].city}" size="50" required> </td></tr>`);
-        res.write(`<tr><td>State</td><td><input type="text" name="state" value="${info.recordset[0].state}" size="50" required> </td></tr>`);
-        res.write(`<tr><td>Postal Code</td><td><input type="text" name="postalCode" value="${info.recordset[0].postalCode}" size="50" required></td></tr>`);
-        res.write(`<tr><td>Country</td><td><input type="text" name="country" value="${info.recordset[0].country}" size="50" required> </td></tr>`);
-        res.write(`<tr><td>User ID</td><td>${info.recordset[0].userid}</td></tr>`);
-        res.write(`<tr><td>Password</td><td><input type="password" name="password" value="${info.recordset[0].password}" size="50" required> </td></tr></table>`);
-        res.write("<table align=\"center\"><tr><td></td><td align=\"center\"><button type=\"submit\" value=\"Submit\">Update</button></td></tr></table></form>");
-        res.write("<h2 align=\"center\"><a href='/'>Home</a><h2>");
-        res.end();
+        customerId = () => info.recordset[0].customerId;
+        firstName = () => info.recordset[0].firstName;
+        lastName = () => info.recordset[0].lastName; 
+        email = () => info.recordset[0].email;
+        phonenum = () => info.recordset[0].phonenum;
+        address = () => info.recordset[0].address; 
+        city = () => info.recordset[0].city;
+        state = () => info.recordset[0].state; 
+        postalCode = () => info.recordset[0].postalCode;
+        country = () => info.recordset[0].country; 
+        userid = () => info.recordset[0].userid; 
+        password = () => info.recordset[0].password;
+
+        return res.render('editAccount', {layout:'main',
+        title:"edit Account",
+        customerId:customerId,
+        firstName:firstName,
+        lastName:lastName,
+        email:email,
+        phonenum:phonenum,
+        address:address,
+        city:city,
+        state: state,
+        postalCode: postalCode,
+        country: country,
+        userid: userid,
+        password:password,
+        username:customer
+    });
        
         } catch(err) {
             console.dir(err);
