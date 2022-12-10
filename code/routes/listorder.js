@@ -18,12 +18,13 @@ router.get('/', function(req, res, next) {
     /** Write query to retrieve all order headers **/
     (async function() {
         try {
-            res.write("<h1>Order List</h1>")
+            res.write("<h2 align=\"center\"><a href='/'>Home</a></h2>");
+            res.write("<h1 align=\"center\">Order List</h1>")
             let pool = await sql.connect(dbConfig);
             let q = "SELECT orderId, orderDate, O.customerId, firstName, lastName, totalAmount FROM ordersummary AS O, customer AS C WHERE O.customerId = C.customerId";
             let orderHeaders = await pool.request().query(q);
             for (let i = 0; i < orderHeaders.recordset.length; i++) {
-                res.write("<table style= \"background-color: #b0c4ed\"border = \"1\"><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
+                res.write("<table align=\"center\" border = \"1\"><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
                 let orderHeader = orderHeaders.recordset[i];
                 res.write(`<tr><td>${orderHeader.orderId}</td><td>${new Date(orderHeader.orderDate).toLocaleString('en-US', {hour12: false})}</td><td>${orderHeader.customerId}</td><td>${orderHeader.firstName} ${orderHeader.lastName}</td><td>$${orderHeader.totalAmount.toFixed(2)}</td></tr>`)
                 res.write("<tr><td colspan = \"50\"><table border = \"1\" align=\"right\"><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>")
@@ -34,7 +35,6 @@ router.get('/', function(req, res, next) {
                     res.write(`<tr><td>${orderProduct.productId}</td><td>${orderProduct.quantity}</td><td>$${orderProduct.price.toFixed(2)}</td></tr>`)
                 }
                 res.write("</table></td></tr></table><br>");
-                res.write("</table><a href='/'>home</a>");
             }
             res.end();
         } catch(err) {
