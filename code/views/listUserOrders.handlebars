@@ -1,0 +1,60 @@
+{{>header}}
+<style>
+    .table{
+        width: 70%;
+        border-collapse: collapse;
+    }
+    .table th, .table td{
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+        color: #9f3074;
+    }
+</style>
+<h1 align=center>List of {{user}}'s Orders</h1>
+{{#each orderH}}
+    <table align="center" class="table">
+        <tr>
+            <th>Order Id</th>
+            <th>date Order Date</th>
+            <th>Customer Id</th>
+            <th>Customer Name</th>
+            <th>Total Amount</th>
+        </tr>
+        
+        <tr>
+            <td>{{orderId}}</td>
+            <td>{{orderDate}}</td>
+            <td>{{customerId}}</td>
+            <td>{{customerName}}</td>
+            <td>${{totalAmount}}</td>
+        </tr>
+        <tr>
+            <td colspan="4">
+
+            </td>
+            <td>
+                <table class="table">
+                    <tr>
+                        <th>Product Id</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                    
+                        {{#each orderP}}
+                            <tr>
+                                <td>{{pid}}</td>
+                                <td>{{quantity}}</td>
+                                <td>{{price}}</td>
+                            </tr>
+                        {{/each}}
+                    
+                </table>
+            </td>
+        </tr>
+        
+    </table>
+    <br>
+    {{/each}}
+    <br>
+
