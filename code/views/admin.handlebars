@@ -30,6 +30,9 @@
         padding: 25px;
         text-align:center
     }
+    .mycanvas{
+
+    }
     
 </style>
 
@@ -46,6 +49,40 @@
     </tr>
     {{/each}}
 </table>
+
+<div align="center">
+  <canvas id="myChart" width="200" height="400"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [{{#each dataO}}"{{date}}",{{/each}}],
+      datasets: [{
+        label: 'Sales per day',
+        data: [{{dataS}}],
+        borderWidth: 1,
+        borderColor: '#9f3074',
+        backgroundColor: '#9f3074'
+      }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        aspectRatio: 2,
+        scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
 
 <h1 align=center>List of all customers</h1>
 <table border=\"1" align=center class="table">

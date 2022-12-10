@@ -32,51 +32,33 @@ router.get('/', function(req, res, next) {
             let q = "SELECT YEAR(orderDate) as yr, MONTH(orderDate) as m, DAY(orderDate) as d, SUM(totalAmount) AS total FROM ordersummary GROUP BY YEAR(orderDate), MONTH(orderDate), DAY(orderDate)";
             let sales = await pool.request().query(q);
 
-           
+            const dataO=[]
 
             for(let i=0; i<sales.recordset.length; i++){
                 let sale = sales.recordset[i];
                 salesHbs[i] = {
                     orderDate:`${sale.yr+"-"+sale.m+"-"+sale.d}`,
                     toa:`${sale.total.toFixed(2)}`
-                }              
+                }
+                // dataO.push(`${sale.yr+"-"+sale.m+"-"+sale.d}`);              
             }
             const dataS=[]
-            const dataO=[]
+            
 
             let q2 = "SELECT orderDate, SUM(totalAmount) AS total FROM ordersummary GROUP BY orderDate";
             let sales2=await pool.request().query(q2);
             for(let i=0;i<sales2.recordset.length;i++){
                 let sale2 = sales2.recordset[i];
                 dataS.push(sale2.total.toFixed(2));
-                dataO.push(sale2.orderDate);
+                dataO[i] ={
+                    date: `${sale2.orderDate.toDateString()}`
+                }
+                
             }
             
-            const data = {
-                labels: dataO,
-                datasets:[
-                    {
-                    label: 'Sales',
-                    data: dataS,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                    }
-                ]
-            };
-            const options = {
-                scales: {
-                    yAxes: [
-                        {
-                            ticks:{
-                                beginsAtZero:true
-                            }
-                        }
-                    ]
-                }
-            };
+            
 
-            // const chart = new chartjs('line',{data,options});
+
 
             let cusQ = "SELECT customerId, firstName, lastName FROM customer";
             let customerList = await pool.request().query(cusQ);
@@ -96,7 +78,9 @@ router.get('/', function(req, res, next) {
             totalOrders:totalOrders(),
             salesHbs:salesHbs,
             customersHbs:customersHbs,
-            username: customerHbs()
+            username: customerHbs(),
+            dataS: dataS,
+            dataO: dataO
             });         
         } catch(err) {
             console.dir(err);
