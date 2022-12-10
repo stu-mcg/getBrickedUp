@@ -15,8 +15,6 @@ router.get('/', function(req, res, next){
     
     console.dir(pid);
     
-   
-
     (async function(){
         try{
             let pool = await sql.connect(dbConfig);

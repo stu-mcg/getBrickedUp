@@ -35,18 +35,14 @@ router.get('/', function(req, res, next){
                 let q2 = "SELECT * FROM product WHERE productName=@pname";
                 let p2 = await pool.request().input("pname", pname2).query(q2);
                 res.write(`<form method="get" action="updateProd" >`);
-
-                let pid = p2.recordset[0].productId;
-                res.write(`<tr><td><b>Product Id</b></td><td name="pId">${p2.recordset[0].productId}</td></tr>`)
-                res.write(`<tr><td><b>Product Name</b></td><td><input type="text" name="pName" value="${p2.recordset[0].productName}" size="80" style="font-size:15px"</td></tr>`);
-                res.write(`<tr><td><b>Product Price</b></td><td><input type="text" name="price2" value="${p2.recordset[0].productPrice.toFixed(2)}" size="80" style="font-size:15px"</td></tr>`);
-                res.write(`<tr><td><b>Product Category</b></td><td><input type="text" name="catId" value="${p2.recordset[0].categoryId}" size="80" style="font-size:15px"</td></tr>`);
-                res.write(`<tr><td><b>Product Description</b></td><td><input type="text" name="prodDesc2" value="${p2.recordset[0].productDesc}" size="80" style="font-size:15px"</td></tr></table>`);
+                
+                //let pid = p2.recordset[0].productId;
+                res.write(`<tr><td><b>Product Name</b></td><td><input type="text" name="pId" value="${p2.recordset[0].productId}" size="80" style="font-size:15px" disabled> </td></tr>`);
+                res.write(`<tr><td><b>Product Name</b></td><td><input type="text" name="pName" value="${p2.recordset[0].productName}" size="80" style="font-size:15px"></td></tr>`);
+                res.write(`<tr><td><b>Product Price</b></td><td><input type="text" name="price2" value="${p2.recordset[0].productPrice.toFixed(2)}" size="80" style="font-size:15px"?</td></tr>`);
+                res.write(`<tr><td><b>Product Category</b></td><td><input type="text" name="catId" value="${p2.recordset[0].categoryId}" size="80" style="font-size:15px"></td></tr>`);
+                res.write(`<tr><td><b>Product Description</b></td><td><input type="text" name="prodDesc2" value="${p2.recordset[0].productDesc}" size="80" style="font-size:15px"></td></tr></table>`);
                 res.write(`<h2 align=center><button type="submit" style="font-size:25px;color:#9f3074">Update</button></h2></form>`);
-
-                
-
-                
             }
            
            
