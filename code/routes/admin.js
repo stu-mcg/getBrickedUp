@@ -6,12 +6,8 @@ const sql = require('mssql');
 
 router.get('/', function(req, res, next) {
 
-	
 	// TODO: Include files auth.jsp and jdbc.jsp
 	auth.checkAuthentication(req, res);
-	
-    
-    
 
     res.setHeader('Content-Type', 'text/html');
 
@@ -22,8 +18,7 @@ router.get('/', function(req, res, next) {
             // const chartjs = require('chart.js');
 
 	    // TODO: Write SQL query that prints out total order amount by day
-            res.write("<a href='/displayInventory'>Product Inventory by Warehouse</a><br>");
-            res.write(`<h1 align=center><a href='/'>home</a></h1>`);
+            res.write(`<h2 align=center><a href='/'>Home</a></h2>`);
 
             let totalQ = "SELECT SUM(totalAmount) AS total, COUNT(*) AS orders FROM ordersummary";
             let total = await pool.request().query(totalQ);
@@ -87,15 +82,9 @@ router.get('/', function(req, res, next) {
                 let customerL = customerList.recordset[i];
                 res.write(`<tr><td style =\"text-align: center\"> ${customerL.firstName}</td><td>${customerL.lastName}</td><td>${customerL.customerId}</td></tr>`);
             }
-            res.write(`</table><br><h1 align=center><a href='/addprod'>Add a New Product</a></h1>`);
-            res.write(`<h1 align=center><a href='/updateDelete'>Update a Product</a></h1>`);
-            
-
-            
-            
-            
-          
-
+            res.write(`</table><br><h2 align=center><a href='/addprod'>Add a New Product</a></h2>`);
+            res.write(`<h2 align=center><a href='/updateDelete'>Update a Product</a></h2>`);
+            res.write("<h2 align=\"center\"><a href='/displayInventory'>Product Inventory</a><h2>");
             res.end();
         } catch(err) {
             console.dir(err);
