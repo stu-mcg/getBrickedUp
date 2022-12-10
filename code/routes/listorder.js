@@ -61,7 +61,7 @@ router.get('/', function(req, res, next) {
             title: 'listOrder',
             orderH: orderH,
             orderP: orderP,
-            orderPI: orderPI
+         
         });
 
         } catch(err) {
