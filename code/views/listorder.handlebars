@@ -12,7 +12,7 @@
         color: #9f3074;
     }
 </style>
-
+{{#each orderH}}
     <table align="center" class="table">
         <tr>
             <th>Order Id</th>
@@ -21,7 +21,7 @@
             <th>Customer Name</th>
             <th>Total Amount</th>
         </tr>
-        {{#each orderH}}
+        
         <tr>
             <td>{{orderId}}</td>
             <td>{{orderDate}}</td>
@@ -30,6 +30,9 @@
             <td>${{totalAmount}}</td>
         </tr>
         <tr>
+            <td colspan="4">
+
+            </td>
             <td>
                 <table class="table">
                     <tr>
@@ -38,16 +41,20 @@
                         <th>Price</th>
                     </tr>
                     {{#each orderP}}
+                        {{#each this}}
                     <tr>
-                        <td>{{pid}}</td>
-                        <td>{{quantity}}</td>
-                        <td>{{price}}</td>
+                        <td>{{orderP.pid}}</td>
+                        <td>{{orderP.quantity}}</td>
+                        <td>{{orderP.price}}</td>
                     </tr>
+                    {{/each}}
                     {{/each}}
                 </table>
             </td>
         </tr>
-        {{/each}}
+        
     </table>
+    <br>
+    {{/each}}
     <br>
 
