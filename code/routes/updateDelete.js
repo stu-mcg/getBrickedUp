@@ -34,10 +34,9 @@ router.get('/', function(req, res, next){
                 res.write(`<table align=center style="font-size:15px">`);
                 let q2 = "SELECT * FROM product WHERE productName=@pname";
                 let p2 = await pool.request().input("pname", pname2).query(q2);
-                res.write(`<form method="get" action="insertProd" >`);
+                res.write(`<form method="get" action="updateProd" >`);
 
                 let pid = p2.recordset[0].productId;
-                console.log(pid);
                 res.write(`<tr><td><b>Product Id</b></td><td name="pId">${p2.recordset[0].productId}</td></tr>`)
                 res.write(`<tr><td><b>Product Name</b></td><td><input type="text" name="pName" value="${p2.recordset[0].productName}" size="80" style="font-size:15px"</td></tr>`);
                 res.write(`<tr><td><b>Product Price</b></td><td><input type="text" name="price2" value="${p2.recordset[0].productPrice.toFixed(2)}" size="80" style="font-size:15px"</td></tr>`);
