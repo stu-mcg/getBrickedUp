@@ -10,12 +10,13 @@ router.get('/', function(req, res, next) {
         let prodPrice = req.query.prodPrice;
 
 
-        // console.log(req.body.action);
+    
     (async function(){
         try{
             let pool = await sql.connect(dbConfig);
             let insert = "INSERT INTO product(productName, categoryId, productDesc, productPrice) VALUES (@prodName , @categoryId , @prodDesc, @prodPrice);"
             await pool.request().input('prodName', prodName).input('categoryId', categoryId).input('prodDesc', prodDesc).input('prodPrice', prodPrice).query(insert);
+        
             res.redirect("/admin");
 
         }catch(err){
