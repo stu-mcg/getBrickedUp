@@ -14,8 +14,8 @@ router.get('/', function(req, res, next) {
     let newQuantity = req.query.qty;
     (async function() {
         try {
-            res.write("<h2 align=\"center\"><a href='/'>Home</a></h2>");
-            res.write("<h2 align=\"center\"><a href='/admin'>Administrators</a></h2>");
+            res.write("<table align=\"center\"><tr><th><h2 align=\"center\"><a href='/'>Home</a></h2></th><th><h1>|</h1></th>");
+            res.write("<th><h2 align=\"center\"><a href='/admin'>Administrators</a></h2></th></tr></table>");
             res.write("<h1 align=\"center\">Update Inventory</h1>");
             let pool = await sql.connect(dbConfig);
             res.write("<form align=\"center\" method=\"get\" action=\"editInventory\">Select Warehouse\t<select size =\"1\" name=\"warehouseId\">");

@@ -10,8 +10,8 @@ router.get('/', function(req, res, next) {
     let warehouseId = req.query.warehouseId;
     (async function() {
         try {
-            res.write("<h2 align=\"center\"><a href='/'>Home</a></h2>");
-            res.write("<h2 align=\"center\"><a href='/admin'>Back</a></h2>");
+            res.write("<table align=\"center\"><tr><th><h2 align=\"center\"><a href='/'>Home</a></h2></th><th><h1>|</h1></th>");
+            res.write("<th><h2 align=\"center\"><a href='/admin'>Back</a></h2></th></tr></table>");
             res.write("<h1 align=\"center\">Product Inventory</h1>");
             res.write("<form method=\"get\" action=\"displayInventory\" align=\"center\">Select Warehouse<select size =\"1\" name=\"warehouseId\">");
             let pool = await sql.connect(dbConfig);
