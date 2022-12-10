@@ -1,0 +1,15 @@
+{{> header}}
+<div>
+<h1>Checkout</h1>
+<h3>Shipping Address</h3>
+<form method="get" action = "order">
+    <table>
+    <tr><td>Address:</td><td><input type="text", name = "address" size="50", value = "{{address}}" required></td></tr>
+    <tr><td>City:</td><td><input type="text", name = "city" size="50", value = "{{city}}" required></td></tr>
+    <tr><td>State:</td><td><input type="text", name = "state" size="50", value = "{{state}}" required></td></tr>
+    <tr><td>PostalCode:</td><td><input type="text", name = "postalcode" size="50", value = "{{postalCode}}" required></td></tr>
+    <tr><td>Country:</td><td><input type="text", name = "country" size="50", value = "{{country}}" required></td></tr>
+    <tr><td><input type="submit" name="submit"></td></tr>
+    <table>
+</form>
+</div>

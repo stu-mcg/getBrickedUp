@@ -7,9 +7,6 @@ router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
     res.write("<title>YOUR NAME Grocery Order Processing</title>");
 
-    let customerId = req.query.customerId;
-    let password = req.query.password;
-
     let productList = false;
     if (req.session.productList && req.session.productList.length > 0) {
         productList = req.session.productList.filter(function (e) {
@@ -27,27 +24,12 @@ router.get('/', function(req, res, next) {
         try {
             let pool = await sql.connect(dbConfig);
             //check id is valid
-            let getCustomerIds = `SELECT customerId FROM customer`;
-            let ids = await (await pool.request().query(getCustomerIds)).recordset;
-            if(!ids.find(e => e.customerId == customerId)){
-                res.write("<h2>Invalid customer id entered, <a href = 'checkout'>try again</a></h2>")
-                res.end();
-                return;
-            }
-            //check password
-            let getPassword = "SELECT password FROM CUSTOMER WHERE customerId = @customerId"
-            let passwordResult = await pool.request().input('customerId', customerId).query(getPassword);
-            let customerPassword = passwordResult.recordset[0].password;
-            if(password != customerPassword){
-                res.write("<h2>Incorrect password, <a href = 'checkout'>try again</a></h2>")
-                res.end();
-                return;
-            }
-
+            let getCustomerId = "SELECT customerId FROM customer WHERE userid = @userid"
+            let customerId = (await pool.request().input("userid", req.session.authenticatedUser).query(getCustomerId)).recordset[0].customerId
 
             //insert order summery
-            let insertSum = "INSERT INTO ordersummary (customerId, orderDate, totalAmount) OUTPUT INSERTED.orderId VALUES(@customerId, GETDATE(), 0)";
-            let result = await pool.request().input('customerId', customerId).query(insertSum);
+            let insertSum = "INSERT INTO ordersummary (customerId, orderDate, totalAmount, shipToAddress, shipToCity, shipToState, shipToPostalCode, shipToCountry) OUTPUT INSERTED.orderId VALUES(@customerId, GETDATE(), 0, @shipToAddress, @shipToCity, @shipToState, @shipToPostalCode, @shipToCountry)";
+            let result = await pool.request().input('customerId', customerId).input('shipToAddress', req.query.address).input('shipToCity', req.query.city).input('shipToState', req.query.state).input('shipToPostalCode', req.query.postalCode).input('shipToCountry', req.query.country).query(insertSum);
             let orderId = result.recordset[0].orderId;
 
             //insert order products
