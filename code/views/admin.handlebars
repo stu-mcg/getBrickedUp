@@ -1,0 +1,35 @@
+{{>header}}
+<h3 align=center>Total Sales: ${{totalSales}}</h3>
+<h3 align=center>Total Orders: {{totalOrders}}</h3>
+<h1 align=center>Administrator Sales Report by Day</h1>
+<table border="1" align=center>
+    <tr>
+        <th>Order Date</th>
+        <th>Total Order Amount</th>
+    </tr>
+    {{#each salesHbs}}
+    <tr>
+        <td style="text-align: center"> {{orderDate}}</td>
+        <td> {{toa}}</td>
+    </tr>
+    {{/each}}
+</table>
+<h1 align=center>List of all customers</h1>
+<table border=\"1" align=center>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Customer ID</th>
+    </tr>
+    {{#each customersHbs}}
+    <tr>
+        <td style ="text-align: center"> {{firstName}}</td>
+        <td>{{lastName}}</td>
+        <td>{{customerId}}</td>
+    </tr>
+    {{/each}}
+    </table>
+    <br>
+    <h2 align=center><a href='/addprod'>Add a New Product</a></h2>
+    <h2 align=center><a href='/updateDelete'>Update a Product</a></h2>
+    <h2 align="center"><a href='/displayInventory'>Product Inventory</a></h2>
