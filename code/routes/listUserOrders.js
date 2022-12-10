@@ -24,8 +24,8 @@ router.get('/', function(req, res, next) {
             let customer = req.session.authenticatedUser;
             customerHbs = () => customer;
             let pool = await sql.connect(dbConfig);
-            let q = "SELECT orderId, orderDate, O.customerId, firstName, lastName, totalAmount FROM ordersummary AS O, customer AS C WHERE O.customerId = C.customerId";
-            let orderHeaders = await pool.request().query(q);
+            let getOrders = "SELECT orderId, orderDate, O.customerId, firstName, lastName, totalAmount FROM ordersummary AS O, customer AS C WHERE O.customerId = C.customerId AND C.userid = @userid";
+            let orderHeaders = await pool.request().input("userid", customer).query(getOrders);
 
             for (let i = 0; i < orderHeaders.recordset.length; i++) {
                 let orderHeader = orderHeaders.recordset[i];
