@@ -22,7 +22,8 @@ router.get('/', function(req, res, next) {
         try {
             orderH = [];
             orderP = [];
-          
+            let customer = req.session.authenticatedUser;
+            customerHbs = () => customer;
             let pool = await sql.connect(dbConfig);
             let q = "SELECT orderId, orderDate, O.customerId, firstName, lastName, totalAmount FROM ordersummary AS O, customer AS C WHERE O.customerId = C.customerId";
             let orderHeaders = await pool.request().query(q);
@@ -61,7 +62,7 @@ router.get('/', function(req, res, next) {
             title: 'listOrder',
             orderH: orderH,
             orderP: orderP,
-         
+            username: customerHbs
         });
 
         } catch(err) {
