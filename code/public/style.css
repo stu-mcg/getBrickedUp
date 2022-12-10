@@ -10,17 +10,20 @@
         font-weight: 300;
         margin: 0 0 0 8px; 
         font-weight: bold;
+        text-align:center;
+
     }
    
     a.button {
         background-color: #01050b;
         color: white;
-        padding: 14px 8px;
-        margin: 10px 2px;
+        padding: 8px 8px;
+        margin: 2px 2px;
         border: none;
-        cursor: grab;
+        cursor: pointer;
         width: 48%;
         text-decoration: none;
+        border-radius: 5%;
     }
       a.button:hover {
         opacity: 0.8;

@@ -7,6 +7,9 @@ router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
     res.write("<title>YOUR NAME Grocery Order Processing</title>");
 
+    let customerId = req.query.customerId;
+    let password = req.query.password;
+
     let productList = false;
     if (req.session.productList && req.session.productList.length > 0) {
         productList = req.session.productList.filter(function (e) {
@@ -15,7 +18,7 @@ router.get('/', function(req, res, next) {
     }
     //check for empty cart
     if(!productList || productList.length == 0){
-        res.write("<h2>There is nothing in the cart, <a href = 'listprod'>return to the shopping page</a></h2>")
+        res.write("<h2 align=center>There is nothing in the cart, <a href = 'listprod'>return to the shopping page</a></h2>")
         res.end()
         return;
     }
@@ -24,8 +27,23 @@ router.get('/', function(req, res, next) {
         try {
             let pool = await sql.connect(dbConfig);
             //check id is valid
-            let getCustomerId = "SELECT customerId FROM customer WHERE userid = @userid"
-            let customerId = (await pool.request().input("userid", req.session.authenticatedUser).query(getCustomerId)).recordset[0].customerId
+            let getCustomerIds = `SELECT customerId FROM customer`;
+            let ids = await (await pool.request().query(getCustomerIds)).recordset;
+            if(!ids.find(e => e.customerId == customerId)){
+                res.write("<h2>Invalid customer id entered, <a href = 'checkout'>try again</a></h2>")
+                res.end();
+                return;
+            }
+            //check password
+            let getPassword = "SELECT password FROM CUSTOMER WHERE customerId = @customerId"
+            let passwordResult = await pool.request().input('customerId', customerId).query(getPassword);
+            let customerPassword = passwordResult.recordset[0].password;
+            if(password != customerPassword){
+                res.write("<h2>Incorrect password, <a href = 'checkout'>try again</a></h2>")
+                res.end();
+                return;
+            }
+
 
             //insert order summery
             let insertSum = "INSERT INTO ordersummary (customerId, orderDate, totalAmount, shipToAddress, shipToCity, shipToState, shipToPostalCode, shipToCountry) OUTPUT INSERTED.orderId VALUES(@customerId, GETDATE(), 0, @shipToAddress, @shipToCity, @shipToState, @shipToPostalCode, @shipToCountry)";
@@ -51,10 +69,10 @@ router.get('/', function(req, res, next) {
             await pool.request().input('orderId', orderId).query(updatePrice)
             
             //print order summary
-            res.write("<h2>Order Summary</h2>")
+            res.write("<h2 align=center>Order Summary</h2>")
             getOrderSum = "SELECT orderDate, O.customerId, firstName, lastName, totalAmount FROM ordersummary AS O, customer AS C WHERE O.customerId = C.customerId AND orderId = @orderId";
             let orderHeader = await (await pool.request().input('orderId', orderId).query(getOrderSum)).recordset[0];
-            res.write("<table border = \"1\"><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
+            res.write("<table align=center border = \"1\"><tr><th>Order Id</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
             res.write(`<tr><td>${orderId}</td><td>${new Date(orderHeader.orderDate).toLocaleString('en-US', {hour12: false})}</td><td>${orderHeader.customerId}</td><td>${orderHeader.firstName} ${orderHeader.lastName}</td><td>$${orderHeader.totalAmount.toFixed(2)}</td></tr>`)
             res.write("<tr><td colspan = \"50\"><table border = \"1\" align=\"right\"><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>")
             getOrderProd = `SELECT productId, quantity, price FROM orderproduct WHERE orderId = @orderId`;
@@ -64,7 +82,7 @@ router.get('/', function(req, res, next) {
                 res.write(`<tr><td>${orderProduct.productId}</td><td>${orderProduct.quantity}</td><td>$${orderProduct.price.toFixed(2)}</td></tr>`)
             }
             res.write("</table></td></tr></table><br>");
-            res.write("<a href='/'>return to home</a>")
+            res.write("<h1 align=center><a href='/'>return to home</a></h1>")
 
             //reset cart
             req.session.productList = [];

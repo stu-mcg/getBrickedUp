@@ -148,9 +148,9 @@ INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Larg
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Small Antarctica Brick',4,'Built for extreme cold, you will never have to worry about paying for warmth.',1.50);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Medium Antarctica Brick',4,'Built for extreme cold, you will never have to worry about paying for warmth. Slightly bigger.',1.60);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Large Antarctica Brick',4,'Built for extreme cold, you will never have to worry about paying for warmth. Much bigger',1.70);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Aqua Brick', 5, 'Water-resistant, thermal insulator, Ideal for shore residences', 2.30 );
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Aqua Brick', 5, 'Water-resistant, thermal insulator, Ideal for shore residences. Slightly bigger', 2.50);
-INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Aqua Brick', 5, 'Water-resistant, thermal insulator, Ideal for shore residences. Much bigger', 2.70);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Small Aqua Brick', 5, 'Water-resistant, thermal insulator, Ideal for shore residences', 2.30 );
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Medium Aqua Brick', 5, 'Water-resistant, thermal insulator, Ideal for shore residences. Slightly bigger', 2.50);
+INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Large Aqua Brick', 5, 'Water-resistant, thermal insulator, Ideal for shore residences. Much bigger', 2.70);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Bricktonium knife', 6, 'Engineered to cut our special bricks, you will not have to worry about design errors', 22.60);
 INSERT product(productName, categoryId, productDesc, productPrice) VALUES ('Morphable Brick', 7, 'Genre-defining, this brick can adopt any shape or form you specify on our included software. Beta-tested for now.', 580020.00);
 

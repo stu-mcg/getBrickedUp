@@ -21,7 +21,8 @@ router.get('/', function(req, res, next){
             res.write(`<tr><td><b>Category Id</b></td><td><input type="text" name="categoryId" size="80" required></td></tr>`);
             res.write(`<tr><td><b>Product description</b></td><td><input type="text" name="prodDesc" size="80" required></td></tr>`);
             res.write(`<tr><td><b>Product Price</b></td><td><input type="numbers" min="0" step="any" name="prodPrice" size="80" required></td></tr></table>`);
-            res.write(`<h2 align=center><button type="submit" value="Submit" align=center style="height:40px;width=80px">Add Product</button></h2>`);
+            res.write(`<h2 align=center><button type="submit"  value ="add" name="Submit" align=center style="height:35px;width=80px">Update</button></h2>`);
+            console.log(req.query.Submit);
             if(error){
                 res.write(`<h2 align=center>${error}</h2>`);
             }

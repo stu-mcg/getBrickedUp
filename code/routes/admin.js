@@ -6,12 +6,8 @@ const sql = require('mssql');
 
 router.get('/', function(req, res, next) {
 
-	
 	// TODO: Include files auth.jsp and jdbc.jsp
 	auth.checkAuthentication(req, res);
-	
-    
-    
 
     res.setHeader('Content-Type', 'text/html');
 
@@ -19,18 +15,20 @@ router.get('/', function(req, res, next) {
         try {
             let pool = await sql.connect(dbConfig);
 
+            salesHbs = [];
+            customersHbs = [];
             // const chartjs = require('chart.js');
+            let customer = req.session.authenticatedUser;
+            customerHbs = () => customer;
 
 	    // TODO: Write SQL query that prints out total order amount by day
-            res.write(`<a href='/'>home</a>`);
 
             let totalQ = "SELECT SUM(totalAmount) AS total, COUNT(*) AS orders FROM ordersummary";
             let total = await pool.request().query(totalQ);
             let totals = total.recordset[0];
-            res.write(`<h3>Total Sales: ${totals.total}</h3><h3>Total Orders: ${totals.orders}</h3>`);
+            totalSales = () => totals.total;
+            totalOrders = () => totals.orders;
 
-            res.write("<h1>Administrator Sales Report by Day</h1>");
-            res.write("<table border=\"1\"><tr><th>Order Date</th><th>Total Order Amount</th></tr>");
             let q = "SELECT YEAR(orderDate) as yr, MONTH(orderDate) as m, DAY(orderDate) as d, SUM(totalAmount) AS total FROM ordersummary GROUP BY YEAR(orderDate), MONTH(orderDate), DAY(orderDate)";
             let sales = await pool.request().query(q);
 
@@ -38,8 +36,10 @@ router.get('/', function(req, res, next) {
 
             for(let i=0; i<sales.recordset.length; i++){
                 let sale = sales.recordset[i];
-                res.write(`<tr><td style=\"text-align: center\"> ${sale.yr+"-"+sale.m+"-"+sale.d}</td><td> $${sale.total.toFixed(2)}</td></tr>`);
-              
+                salesHbs[i] = {
+                    orderDate:`${sale.yr+"-"+sale.m+"-"+sale.d}`,
+                    toa:`${sale.total.toFixed(2)}`
+                }              
             }
             const dataS=[]
             const dataO=[]
@@ -75,25 +75,29 @@ router.get('/', function(req, res, next) {
                     ]
                 }
             };
+
             // const chart = new chartjs('line',{data,options});
-         
-            
-            res.write(`</table><h1>List of all customers</h1>`);
+
             let cusQ = "SELECT customerId, firstName, lastName FROM customer";
-            res.write(`<table border=\"1"><tr><th>First Name</th><th>Last Name</th><th>Customer ID</th></tr>`);
             let customerList = await pool.request().query(cusQ);
             for(let i=0; i<customerList.recordset.length; i++){
                 let customerL = customerList.recordset[i];
-                res.write(`<tr><td style =\"text-align: center\"> ${customerL.firstName}</td><td>${customerL.lastName}</td><td>${customerL.customerId}</td></tr>`);
+                customersHbs[i] = {
+                    firstName:`${customerL.firstName}`,
+                    lastName:`${customerL.lastName}`,
+                    customerId:`${customerL.customerId}`
+                }
             }
-            res.write(`<a href='/addprod'>Add a New Product</a>`);
 
-            res.write('')
             
-            
-          
-
-            res.end();
+            return res.render('admin',{layout: 'main',
+            title:"Admin",
+            totalSales:totalSales(),
+            totalOrders:totalOrders(),
+            salesHbs:salesHbs,
+            customersHbs:customersHbs,
+            username: customerHbs()
+            });         
         } catch(err) {
             console.dir(err);
             res.write(err + "");
