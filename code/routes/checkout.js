@@ -5,11 +5,11 @@ router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
     res.write("<title>Grocery CheckOut Line</title>");
 
-    res.write("<h1>Login to complete the transaction:</h1>");
+    res.write("<h1 align=center>Login to complete the transaction:</h1>");
 
-    res.write('<form method="get" action="order">');
-    res.write('Username: <input type="text" name="username" size="50"><br>');
-    res.write('Password: <input type="password", name="password" size="50"><br>');
+    res.write('<form method="get" action="order" align=center>');
+    res.write('Username: <input type="text" name="username" size="30"><br>');
+    res.write('Password: <input type="password", name="password" size="30"><br>');
     res.write('<input type="submit" value="Submit">');
     res.write('</form>');
 

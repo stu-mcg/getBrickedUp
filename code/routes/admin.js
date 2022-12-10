@@ -75,7 +75,9 @@ router.get('/', function(req, res, next) {
                     ]
                 }
             };
+
             // const chart = new chartjs('line',{data,options});
+
             let cusQ = "SELECT customerId, firstName, lastName FROM customer";
             let customerList = await pool.request().query(cusQ);
             for(let i=0; i<customerList.recordset.length; i++){
@@ -86,6 +88,8 @@ router.get('/', function(req, res, next) {
                     customerId:`${customerL.customerId}`
                 }
             }
+
+            
             return res.render('admin',{layout: 'main',
             title:"Admin",
             totalSales:totalSales(),
