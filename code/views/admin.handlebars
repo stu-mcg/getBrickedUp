@@ -1,5 +1,14 @@
+
 {{>header}}
-<h3 align=center>Total Sales: ${{totalSales}}</h3>
+<br>
+<table align="center">
+    <tr>
+        <th><h3 align=center><a href='/addprod' class="button">Add a New Product</a></h3></th>
+        <th><h3 align=center><a href='/updateDelete' class="button">Update a Product</a></h3></th>
+        <th><h3 align="center"><a href='/displayInventory' class="button">Product Inventory</a></h3></th>
+    </tr>
+</table>    
+    <h3 align=center>Total Sales: ${{totalSales}}</h3>
 <h3 align=center>Total Orders: {{totalOrders}}</h3>
 <h1 align=center>Administrator Sales Report by Day</h1>
 
@@ -45,6 +54,4 @@
     {{/each}}
     </table>
     <br>
-    <h2 align=center><a href='/addprod'>Add a New Product</a></h2>
-    <h2 align=center><a href='/updateDelete'>Update a Product</a></h2>
-    <h2 align="center"><a href='/displayInventory'>Product Inventory</a></h2>
+    
