@@ -59,7 +59,8 @@ router.get('/', function(req, res, next) {
             state: state,
             zip: zip,
             country: country,
-            userId: userId
+            userId: userId,
+            username:customer
         });
 
         } catch(err) {

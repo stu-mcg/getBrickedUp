@@ -1,4 +1,22 @@
 <!DOCTYPE html>
+<style>
+    .row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+/* Create two equal columns that sits next to each other */
+.column {
+  flex: 50%;
+  padding: 0 4px;
+}
+
+.column img {
+  margin-top: 8px;
+  vertical-align: middle;
+}
+</style>
 {{>header}}
 <html lang="en">
     <head>
@@ -14,6 +32,16 @@
         <h2 align="center"><a href="/admin">Administrators</a></h2>
        
     
-      </body>
-    </html>
+    </body>
+    <p align = "center">_____________________________________________________________________</p>
+    <p align = "center"><strong>Revolutionizing building one brick at a time</strong></p>
+    <div class="row" align = 'center'>
+        <div class="column">
+            <img src="img/stuBrick.jpeg">
+            <img src="img/alrickBrick.jpeg">
+            <img src="img/macBrick.jpeg">
+            <img src="img/willBrick.jpeg">
+        </div>
+        </div>
+    </div>
 </html>
