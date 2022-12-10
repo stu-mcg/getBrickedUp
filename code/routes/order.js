@@ -7,8 +7,7 @@ router.get('/', function(req, res, next) {
     res.setHeader('Content-Type', 'text/html');
     res.write("<title>YOUR NAME Grocery Order Processing</title>");
 
-    let username = req.query.username;
-    //let customerId = req.query.customerId;
+    let customerId = req.query.customerId;
     let password = req.query.password;
 
     let productList = false;
@@ -28,45 +27,27 @@ router.get('/', function(req, res, next) {
         try {
             let pool = await sql.connect(dbConfig);
             //check id is valid
-            // let getCustomerIds = `SELECT customerId FROM customer`;
-            // let ids = await (await pool.request().query(getCustomerIds)).recordset;
-            // if(!ids.find(e => e.customerId == customerId)){
-            //     res.write("<h2>Invalid customer id entered, <a href = 'checkout'>try again</a></h2>")
-            //     res.end();
-            //     return;
-            // }
-            //check username valid
-            let getUsernames = "SELECT userid FROM customer"
-            let usernames = await pool.request().query(getUsernames);
-            let valid = false
-            for(let i = 0; i<usernames.recordset.length;i++){
-                if(usernames.recordset[i].userid == username){
-                    valid = true;
-                }
-            }
-            if(!valid){
-                res.write("<h2 align=center>Invalid username entered, <a href = 'checkout'>try again</a></h2>")
+            let getCustomerIds = `SELECT customerId FROM customer`;
+            let ids = await (await pool.request().query(getCustomerIds)).recordset;
+            if(!ids.find(e => e.customerId == customerId)){
+                res.write("<h2>Invalid customer id entered, <a href = 'checkout'>try again</a></h2>")
                 res.end();
                 return;
             }
-            //get id
-            let getId = "SELECT customerId FROM customer WHERE userid = @username"
-            let customerId = await (await pool.request().input('username', username).query(getId)).recordset[0].customerId;
-
             //check password
             let getPassword = "SELECT password FROM CUSTOMER WHERE customerId = @customerId"
             let passwordResult = await pool.request().input('customerId', customerId).query(getPassword);
             let customerPassword = passwordResult.recordset[0].password;
             if(password != customerPassword){
-                res.write("<h2 align=center>Incorrect password, <a href = 'checkout'>try again</a></h2>")
+                res.write("<h2>Incorrect password, <a href = 'checkout'>try again</a></h2>")
                 res.end();
                 return;
             }
 
 
             //insert order summery
-            let insertSum = "INSERT INTO ordersummary (customerId, orderDate, totalAmount) OUTPUT INSERTED.orderId VALUES(@customerId, GETDATE(), 0)";
-            let result = await pool.request().input('customerId', customerId).query(insertSum);
+            let insertSum = "INSERT INTO ordersummary (customerId, orderDate, totalAmount, shipToAddress, shipToCity, shipToState, shipToPostalCode, shipToCountry) OUTPUT INSERTED.orderId VALUES(@customerId, GETDATE(), 0, @shipToAddress, @shipToCity, @shipToState, @shipToPostalCode, @shipToCountry)";
+            let result = await pool.request().input('customerId', customerId).input('shipToAddress', req.query.address).input('shipToCity', req.query.city).input('shipToState', req.query.state).input('shipToPostalCode', req.query.postalCode).input('shipToCountry', req.query.country).query(insertSum);
             let orderId = result.recordset[0].orderId;
 
             //insert order products
